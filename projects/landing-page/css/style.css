@@ -1,3 +1,8 @@
+* {
+  /* changed scrollbar color to fit the background color (for most browsers) */
+  scrollbar-color: gray black;
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -22,7 +27,6 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  border: 2px white solid;
 }
 
 .hero-image {
