@@ -1,0 +1,47 @@
+* {
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  color: white;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  background-color: oklch(37.2% 0.044 257.287);
+  border-radius: 20px;
+  padding: 16px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#score,
+#computerScore {
+  font-weight: 700;
+  font-size: 28px;
+}
+
+h1 {
+  margin-bottom: 64px;
+}
+
+button {
+  margin-top: 32px;
+  width: 128px;
+  height: 32px;
+  background-color: oklch(58.8% 0.158 241.966);
+  color: white;
+  border-radius: 24px;
+  border: none;
+  font-size: 18px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.6);
+}
