@@ -1,10 +1,18 @@
-const scoreUI = document.getElementById("score");
+let humanScore = 0;
+let computerScore = 0;
+
+const rockUI = document.getElementById("rock");
+const paperUI = document.getElementById("paper");
+const scissorsUI = document.getElementById("scissors");
+const playerScoreUI = document.getElementById("playerScore");
 const computerScoreUI = document.getElementById("computerScore");
-const resultUI = document.getElementById("results");
-function getComputerChoice() {
-  // gets random number between 0 and 2
+const winnerText = document.getElementById("winner");
+const restartButton = document.getElementById("restart");
+restartButton.onclick = () => window.location.reload();
+
+function getComputerSelection() {
   let choice = Math.floor(Math.random() * 3);
-  // returns randomly generated choice from rock -> scissors (0 -> 2)
+
   if (choice === 0) {
     return "rock";
   } else if (choice === 1) {
@@ -12,95 +20,73 @@ function getComputerChoice() {
   } else if (choice === 2) {
     return "scissors";
   } else {
-    return;
+    return "ERROR";
   }
 }
-
-function getHumanChoice() {
-  let humanChoice = parseInt(
-    prompt("Enter a number between 0-2 (0, Rock) (1, Paper), (2, Scissors)"),
-  );
-  while (humanChoice > 2 || humanChoice < 0) {
-    alert("Invalid Input!");
-    humanChoice = parseInt(
-      prompt("Enter a number between 0-2 (0, Rock) (1, Paper), (2, Scissors)"),
-    );
-  }
-  return humanChoice;
-}
-
-let humanScore = 0;
-let computerScore = 0;
 
 function playRound(humanChoice, computerChoice) {
-  // Computer Wins Scenario
   if (computerChoice == "scissors" && humanChoice == 1) {
     computerScore++;
-    alert(
-      `Computer Chose Scissors, You Chose Paper!\nYour score: ${humanScore}\nComputer's score: ${computerScore}`,
-    );
+    computerScoreUI.textContent = `Computer Chose Scissors! Computer Score: ${computerScore}`;
+    playerScoreUI.textContent = `You Chose Paper! Your Score: ${humanScore}`;
   } else if (computerChoice == "paper" && humanChoice == 0) {
     computerScore++;
-    alert(
-      `Computer Chose Paper, You Chose Rock!\nYour score: ${humanScore}\nComputer's score: ${computerScore}`,
-    );
+    computerScoreUI.textContent = `Computer Chose Paper! Computer Score: ${computerScore}`;
+    playerScoreUI.textContent = `You Chose Rock! Your Score: ${humanScore}`;
   } else if (computerChoice == "rock" && humanChoice == 2) {
     computerScore++;
-    alert(
-      `Computer Chose Rock, You Chose Scissors!\nYour score: ${humanScore}\nComputer's score: ${computerScore}`,
-    );
+    computerScoreUI.textContent = `Computer Chose Rock! Computer Score: ${computerScore}`;
+    playerScoreUI.textContent = `You Chose Scissors! Your Score: ${humanScore}`;
   } // Player Wins Scenario
   else if (humanChoice == 2 && computerChoice == "paper") {
     humanScore++;
-    alert(
-      `Computer Chose Paper, You Chose Rock!\nYour score: ${humanScore}\nComputer's score: ${computerScore}`,
-    );
+    computerScoreUI.textContent = `Computer Chose Paper! Computer Score: ${computerScore}`;
+    playerScoreUI.textContent = `You Chose Scissors! Your Score: ${humanScore}`;
   } else if (humanChoice == 1 && computerChoice == "rock") {
     humanScore++;
-    alert(
-      `Computer Chose Rock, You Chose Paper!\nYour score: ${humanScore}\nComputer's score: ${computerScore}`,
-    );
+    computerScoreUI.textContent = `Computer Chose Rock! Computer Score: ${computerScore}`;
+    playerScoreUI.textContent = `You Chose Paper! Your Score: ${humanScore}`;
   } else if (humanChoice == 0 && computerChoice == "scissors") {
     humanScore++;
-    alert(
-      `Computer Chose Scissors, You Chose Rock!\nYour score: ${humanScore}\nComputer's score: ${computerScore}`,
-    );
+    computerScoreUI.textContent = `Computer Chose Scissors! Computer Score: ${computerScore}`;
+    playerScoreUI.textContent = `You Chose Rock! Your Score: ${humanScore}`;
   }
   // DRAW Scenario
   else {
-    alert(
-      `DRAW!\nYour score: ${humanScore}\nComputer's score: ${computerScore}`,
-    );
+    computerScoreUI.textContent = `DRAW! Computer Score: ${computerScore}`;
+    playerScoreUI.textContent = `DRAW! Your Score: ${humanScore}`;
   }
-  scoreUI.textContent = `Your Score: ${humanScore}`;
-  computerScoreUI.textContent = `Computer Score: ${computerScore}`;
-}
-
-let rounds = parseInt(prompt("How many rounds would you like to play?"));
-while (rounds <= 0) {
-  rounds = parseInt(prompt("How many rounds would you like to play?"));
-}
-
-function playGame(rounds) {
-  let round = 0;
-  let humanChoice = null;
-  let computerChoice = null;
-  while (round < rounds) {
-    humanChoice = getHumanChoice();
-    computerChoice = getComputerChoice();
-    playRound(humanChoice, computerChoice);
-    round++;
-    console.log(`Round: ${round}`);
-  }
-  if (humanScore > computerScore) {
-    resultUI.textContent = "You Win!";
-  } else if (computerScore > humanScore) {
-    resultUI.textContent = "You Lose!";
-  } else if (humanScore == computerScore) {
-    resultUI.textContent = "Draw!";
-  } else {
-    resultUI.textContent = "Unhandled Condition! Something went wrong!";
+  // Winner
+  if (humanScore >= 5 || computerScore >= 5) {
+    rockButton.disabled = true;
+    paperButton.disabled = true;
+    scissorsButton.disabled = true;
+    if (humanScore > computerScore) {
+      const resultsContainer = document.getElementById("results-container");
+      resultsContainer.style.display = "flex";
+      winner.textContent = "You Won!";
+    } else if (computerScore > humanScore) {
+      const resultsContainer = document.getElementById("results-container");
+      resultsContainer.style.display = "flex";
+      winner.textContent = "You Lose!";
+    } else if (computerScore == humanScore) {
+      const resultsContainer = document.getElementById("results-container");
+      resultsContainer.style.display = "flex";
+      winner.textContent = "DRAW!";
+    }
   }
 }
 
-playGame(rounds);
+const rockButton = document.getElementById("rock");
+const paperButton = document.getElementById("paper");
+const scissorsButton = document.getElementById("scissors");
+
+rockButton.addEventListener("click", () => {
+  playRound(0, getComputerSelection());
+});
+paperButton.addEventListener("click", () => {
+  playRound(1, getComputerSelection());
+});
+scissorsButton.addEventListener("click", () => {
+  playRound(2, getComputerSelection());
+});

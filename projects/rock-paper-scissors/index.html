@@ -5,20 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title></title>
     <link href="css/style.css" rel="stylesheet" />
+    <script src="script.js" defer></script>
   </head>
   <body>
     <div class="header">
-      <p style="font-size: 32px; font-weight: 800">Rock Paper Scissors</p>
+      <p>Rock Paper Scissors</p>
     </div>
-    <div class="content">
-      <div class="container">
-        <h1>Game in Progress...</h1>
-        <p style="font-size: 32px; font-weight: 700" id="results">Results:</p>
-        <p id="score"></p>
-        <p id="computerScore"></p>
-        <button onClick="window.location.reload();">Play Again</button>
+    <div class="container">
+      <div class="scores">
+        <p id="computerScore">Computer Score: 0</p>
+        <p id="playerScore">Player Score: 0</p>
+      </div>
+      <div class="buttons">
+        <button id="rock">🪨</button>
+        <button id="paper">📄</button>
+        <button id="scissors">✂️</button>
+      </div>
+      <div class="results" style="display: none" id="results-container">
+        <p style="font-weight: 800; font-size: 32px">Game Over!</p>
+        <p id="winner" style="font-weight: 700; font-size: 24px">
+          The winner is (DELETE LATER)
+        </p>
+        <button id="restart" style="color: white; width: 150px; flex-shrink: 0">
+          Try Again
+        </button>
       </div>
     </div>
-    <script src="script.js"></script>
   </body>
 </html>
