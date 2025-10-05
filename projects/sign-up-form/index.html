@@ -46,7 +46,9 @@
           <p>You <em>know</em> you want to.</p>
         </div>
         <div class="form">
-          <p style="font-weight: 600; font-size: 1.5em">Let's do this!</p>
+          <p style="font-weight: 600; font-size: 1.5em; margin-bottom: 1em">
+            Let's do this!
+          </p>
           <form action="#" method="get">
             <div class="form-block">
               <p>
@@ -100,6 +102,8 @@
                   name="user_password"
                   placeholder="Password"
                   id="user_password"
+                  minlength="3"
+                  maxlength="20"
                   required
                 />
               </p>
@@ -110,8 +114,14 @@
                   name="user_confirm_password"
                   id="confirm_password"
                   placeholder="Confirm Password"
+                  minlength="3"
+                  maxlength="20"
+                  required
                 />
               </p>
+            </div>
+            <div class="button-container">
+              <button type="submit">Create Account</button>
             </div>
           </form>
         </div>
