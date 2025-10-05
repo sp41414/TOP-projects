@@ -6,5 +6,107 @@
     <title>Sign Up Form</title>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body></body>
+  <body>
+    <div class="container">
+      <div class="image-left">
+        <div class="image-header-container">
+          <div class="logo">
+            <img
+              src="https://cdn.statically.io/gh/TheOdinProject/curriculum/5f37d43908ef92499e95a9b90fc3cc291a95014c/html_css/project-sign-up-form/odin-lined.png"
+              alt="The Odin Project Logo"
+            />
+          </div>
+          <div class="image-header-text">ODIN</div>
+        </div>
+        <div class="image-footer">
+          Photo by
+          <a href="https://unsplash.com/@haliewestphoto">Halie West</a> on
+          <a
+            href="https://unsplash.com/photos/green-leaf-plant-in-close-up-photography-25xggax4bSA"
+            >Unsplash</a
+          >
+        </div>
+      </div>
+      <div class="form-body">
+        <div class="header">
+          <p>
+            This is not a real online service! You know you need something like
+            this in your life to help you realize your deepest dreams. Sign up
+            <em>now</em> to get started.
+          </p>
+          <p>You <em>know</em> you want to.</p>
+        </div>
+        <div class="form">
+          <p style="font-weight: 600; font-size: 1.5em">Let's do this!</p>
+          <form action="#" method="get">
+            <div class="form-block">
+              <p>
+                <label for="user_name">FIRST NAME</label>
+                <input
+                  type="text"
+                  placeholder="First Name"
+                  id="first_name"
+                  name="user_name_first"
+                  required
+                />
+              </p>
+              <p>
+                <label for="user_last_name">LAST NAME</label>
+                <input
+                  type="text"
+                  name="user_name_last"
+                  id="last_name"
+                  placeholder="Last Name"
+                />
+              </p>
+            </div>
+            <div class="form-block">
+              <p>
+                <label for="user_email">EMAIL</label>
+                <input
+                  type="email"
+                  name="user_email"
+                  id="email"
+                  placeholder="Email"
+                  required
+                />
+              </p>
+              <p>
+                <label for="user_mobile">PHONE NUMBER</label>
+                <input
+                  type="tel"
+                  name="user_mobile"
+                  id="user_mobile"
+                  placeholder="Mobile Number"
+                  pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                  title="Please enter a valid phone number in the format (123-456-7890)"
+                />
+              </p>
+            </div>
+            <div class="form-block">
+              <p>
+                <label for="user_password"> PASSWORD </label>
+                <input
+                  type="password"
+                  name="user_password"
+                  placeholder="Password"
+                  id="user_password"
+                  required
+                />
+              </p>
+              <p>
+                <label for="user_confirm_password"> CONFIRM PASSWORD </label>
+                <input
+                  type="password"
+                  name="user_confirm_password"
+                  id="confirm_password"
+                  placeholder="Confirm Password"
+                />
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
