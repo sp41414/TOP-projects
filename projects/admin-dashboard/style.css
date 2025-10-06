@@ -341,6 +341,18 @@ body {
   border-top-left-radius: 2em;
   border-bottom-left-radius: 2em;
 }
+.card-footer {
+  display: flex;
+  gap: 0.8em;
+  position: absolute;
+  bottom:0;
+  right:0;
+  padding: 1em;
+}
+.card-footer svg {
+  width: 1.5em;
+  height: auto;
+}
 #announcements {
   grid-row: 1/2;
   grid-column: 2/3;
