@@ -86,6 +86,7 @@ newBookButton.addEventListener("click", () => {
 });
 
 const form = document.getElementById("book-form");
+const formContainer = document.getElementById("form");
 const submitButton = document.getElementById("submit");
 
 submitButton.addEventListener("click", () => {
@@ -93,4 +94,5 @@ submitButton.addEventListener("click", () => {
   const book = new Book(answers[0].value, answers[1].value, answers[2].value);
   addBookToLibrary(book);
   displayBooks(library);
+  formContainer.style.display = "none";
 });
