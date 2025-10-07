@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library</title>
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <p>Library</p>
+        <div class="links">
+          <a href="#add-book">Add Book</a>
+          <a href="#books">Read Books</a>
+        </div>
+      </div>
+      <div class="body">
+        <div class="books" id="books"></div>
+      </div>
+      <div class="new-book">
+        <button type="button" id="add-book">New Book</button>
+      </div>
+      <div class="form-container">
+        <div class="form" id="form-container" style="display: none">
+          <form id="book-form">
+            <label for="name">*Book's Name:</label>
+            <input
+              type="text"
+              name="name"
+              id="book-name"
+              placeholder="Moby Dick"
+              required
+            />
+            <label for="author">Book's Author:</label>
+            <input
+              type="text"
+              name="author"
+              id="book-author"
+              placeholder="Herman Melville"
+              required
+            />
+            <label for="release">Book's Release Date:</label>
+            <input
+              type="number"
+              name="release"
+              id="book-release-date"
+              placeholder="1851"
+              required
+            />
+            <div class="new-book">
+              <button type="button" id="submit">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
