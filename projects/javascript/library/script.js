@@ -80,19 +80,23 @@ function displayBooks(library) {
 }
 
 const newBookButton = document.getElementById("add-book");
-newBookButton.addEventListener("click", () => {
+newBookButton.onclick = () => {
   const form = document.getElementById("form-container");
   form.style.display = "block";
-});
+};
 
 const form = document.getElementById("book-form");
-const formContainer = document.getElementById("form");
+const formContainer = document.getElementById("form-container");
 const submitButton = document.getElementById("submit");
 
-submitButton.addEventListener("click", () => {
+submitButton.onclick = () => {
   const answers = form.getElementsByTagName("input");
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    return;
+  }
   const book = new Book(answers[0].value, answers[1].value, answers[2].value);
   addBookToLibrary(book);
   displayBooks(library);
   formContainer.style.display = "none";
-});
+};
