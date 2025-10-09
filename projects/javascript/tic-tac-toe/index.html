@@ -1,27 +1,27 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Tic Tac Toe</title>
-	<script src="script.js" defer></script>
-	<link rel="stylesheet" href="style.css">
-</head>
-<body>
-	<div class="container">
-		<h1>Tic Tac Toe</h1>
-		<div class="choice-container" id="choice-container">
-			<p>
-				Choose your marker
-			</p>
-			<div class="choice">
-				<button id="marker-x">X</button>
-				<button id="marker-o">O</button>
-			</div>
-		</div>
-		<div class="game" id="game-container" style="display: none;">
-
-		</div>
-	</div>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic Tac Toe</title>
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Tic Tac Toe</h1>
+      <div class="choice-container" id="choice-container">
+        <p>Choose your marker</p>
+        <div class="choice">
+          <button id="marker-x">X</button>
+          <button id="marker-o">O</button>
+        </div>
+      </div>
+      <div class="game" id="game-container" style="display: none"></div>
+      <div class="winner" display="none" id="winner">
+        <p id="winner-text"></p>
+        <button id="restart" display="none">Restart</button>
+      </div>
+    </div>
+  </body>
 </html>
