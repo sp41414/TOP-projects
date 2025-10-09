@@ -5,11 +5,9 @@ const gameBoard = (() => {
   let gameBoardref = [0, 0, 0, 0, 0, 0, 0, 0, 0];
   let currentMarker = 1;
   const gameMove = (marker, position) => {
-	if (gameBoard[position] == 0) {
+	if (gameBoard[position] === 0) {
    		gameBoard[position] = marker;
     	gameBoardref[position] = marker;
-	} else {
-		return;
 	}
   };
   const checkWin = () => {
@@ -77,8 +75,6 @@ const Player = (marker) => {
         gameBoard.currentMarker = gameBoard.currentMarker === 1 ? 2 : 1;
         AI.move(gameBoard.gameBoardref, marker);
       }
-    } else {
-      return;
     }
   };
   return { playerMove, marker };
@@ -86,7 +82,7 @@ const Player = (marker) => {
 
 const AI = (() => {
   const move = (gameBoardArray, playerMarker) => {
-    if (gameBoard.currentMarker != player.marker) {
+    if (gameBoard.currentMarker !== playerMarker) {
       let emptyArray = [];
       gameBoardArray.forEach((element, index) => {
         if (element === 0) {
@@ -121,6 +117,9 @@ function initializeGameBoard() {
     });
     gameContainer.appendChild(cell);
   }
+  if (player.marker === 2 && gameBoard.currentMarker === 1) {
+	  AI.move(gameBoard.gameBoardref, 2);
+  }
 }
 
 const choiceContainer = document.getElementById("choice-container");
@@ -142,7 +141,7 @@ markerXSelection.addEventListener("click", () => {
 });
 markerOSelection.addEventListener("click", () => {
   player = Player(2);
-  gameBoard.currentMarker = 2;
+  gameBoard.currentMarker = 1;
   choiceContainer.style.display = "none";
   initializeGameBoard();
   gameContainer.style.display = "grid";
