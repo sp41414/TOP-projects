@@ -53,3 +53,16 @@ h1 {
 #marker-o {
 	background-color: oklch(64.5% 0.246 16.439);
 }
+
+.cell {
+	background-color: white;
+	width: 1fr;
+	height: 1fr;
+	border: 2px solid black;
+	color: black;
+	font-size: 4em;
+	font-weight: bold;
+	display :flex;
+	align-items: center;
+	justify-content: center;
+}
