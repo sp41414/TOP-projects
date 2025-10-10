@@ -12,7 +12,7 @@ class Book {
 		if (this.isRead === "Unread") {
 			this.isRead = "Read";
 		} else {
-			this.isRead = "Read";
+			this.isRead = "Unread";
 		}
 	}
 }
@@ -49,7 +49,6 @@ function displayBooks(library) {
 			const book = library.find((b) => b.id === id);
 			const readText =
 				button.target.parentElement.querySelector(".unread, .read");
-
 			if (book) {
 				book.read();
 				readText.textContent = book.isRead;
@@ -58,7 +57,7 @@ function displayBooks(library) {
 		});
 
 		let isReadText = document.createElement("p");
-		isReadText.className = "unread";
+		isReadText.className = library[book].isRead === "Read" ? "read" : "unread";
 
 		isReadText.textContent = library[book].isRead;
 
