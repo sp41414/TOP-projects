@@ -29,13 +29,13 @@ export default function initializeContent() {
     reservationHoursDescription.id = "reservation-hours-description"
     
     reservationHoursDescription.innerHTML = `				
-                <br class="red">Sunday: 8:00:01AM - 8:00:02AM</br>
+                <br>Sunday: 8:00:01AM - 8:00:02AM</br>
 				<br>Monday: 6:00:00AM - 6:01:00AM</br>
 				<br>Tuesday: 6:00:00AM - 6:01:00AM</br>
 				<br>Wednesday: 6:00:00AM - 6:01:00AM</br>
 				<br>Thursday: 6:00:00AM - 6:01:00AM</br>
 				<br>Friday: 6:00:00AM - 6:01:00AM</br>
-				<br class="red">Saturday: 8:00:01Am - 8:00:02AM</br>
+				<br>Saturday: 8:00:01Am - 8:00:02AM</br>
     `
 
     reservationHoursContainer.appendChild(reservationHoursTitle)
