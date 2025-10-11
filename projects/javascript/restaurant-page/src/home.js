@@ -27,15 +27,16 @@ export default function initializeContent() {
 
     let reservationHoursDescription = document.createElement("div");
     reservationHoursDescription.id = "reservation-hours-description"
-    reservationHoursDescription.textContent = `				
-                Sunday: 8:00:01AM - 8:00:02AM
-				Monday: 6:00:00AM - 6:01:00AM
-				Tuesday: 6:00:00AM - 6:01:00AM
-				Wednesday: 6:00:00AM - 6:01:00AM
-				Thursday: 6:00:00AM - 6:01:00AM
-				Friday: 6:00:00AM - 6:01:00AM
-				Saturday: 8:00:01Am - 8:00:02AM
-                `
+    
+    reservationHoursDescription.innerHTML = `				
+                <br class="red">Sunday: 8:00:01AM - 8:00:02AM</br>
+				<br>Monday: 6:00:00AM - 6:01:00AM</br>
+				<br>Tuesday: 6:00:00AM - 6:01:00AM</br>
+				<br>Wednesday: 6:00:00AM - 6:01:00AM</br>
+				<br>Thursday: 6:00:00AM - 6:01:00AM</br>
+				<br>Friday: 6:00:00AM - 6:01:00AM</br>
+				<br class="red">Saturday: 8:00:01Am - 8:00:02AM</br>
+    `
 
     reservationHoursContainer.appendChild(reservationHoursTitle)
     reservationHoursContainer.appendChild(reservationHoursDescription)
