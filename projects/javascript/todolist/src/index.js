@@ -1,4 +1,5 @@
 import "./style.css";
-import { loadSidebar, hideSidebar } from "./frontend";
+import { loadSidebar, loadTasks } from "./frontend";
 
 loadSidebar();
+loadTasks();

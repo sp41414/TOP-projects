@@ -80,7 +80,39 @@ body {
   border-radius: 1em;
   background-color: oklch(72.3% 0.219 149.579);
 }
+#add-task:hover,
+#add-project:hover {
+  background-color: oklch(62.7% 0.194 149.214);
+  cursor: pointer;
+}
+#choose-project {
+  display: flex;
+  margin: 2em;
+  align-items: center;
+  justify-content: center;
+}
+#choose-project-dropdown {
+  width: 50%;
+  border: none;
+  border-radius: 2em;
+  background-color: oklch(64.5% 0.246 16.439);
+  padding: 1em;
+  color: white;
+}
+#choose-project-dropdown:hover {
+  background-color: oklch(51.4% 0.222 16.935);
+}
+#choose-project-dropdown option {
+  background-color: oklch(64.5% 0.246 16.439);
+  color: white;
+}
 
 #content {
   flex: 1;
+  padding: 1em;
+}
+#todo-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-rows: min-content;
 }

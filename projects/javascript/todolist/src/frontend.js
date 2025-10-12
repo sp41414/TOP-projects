@@ -9,6 +9,8 @@ export function loadSidebar() {
   let createProjectTaskContainer = document.createElement("div");
   let createProjectContainer = document.createElement("div");
   let createTaskContainer = document.createElement("div");
+  let chooseProjectContainer = document.createElement("div");
+  chooseProjectContainer.id = "choose-project";
 
   sidebarTitle.textContent = "Todo List";
   sidebarTitle.id = "sidebar-title";
@@ -22,6 +24,7 @@ export function loadSidebar() {
   sidebarContainer.appendChild(hideSidebarContainer);
   sidebarContainer.appendChild(sidebarTitle);
   createProjectTaskContainer.appendChild(createProjectContainer);
+  sidebarContainer.appendChild(chooseProjectContainer);
   createProjectTaskContainer.appendChild(createTaskContainer);
   sidebarContainer.appendChild(createProjectTaskContainer);
 
@@ -39,10 +42,13 @@ export function loadSidebar() {
   let addTaskButton = document.createElement("button");
   addTaskButton.id = "add-task";
   addTaskButton.textContent = "Add Task";
+  let chooseProject = document.createElement("select");
+  chooseProject.id = "choose-project-dropdown";
 
   createProjectContainer.appendChild(addProjectButton);
   createTaskContainer.appendChild(addTaskButton);
   hideSidebarContainer.appendChild(hideSidebarIcon);
+  chooseProjectContainer.appendChild(chooseProject);
 }
 
 export function hideSidebar() {
@@ -64,5 +70,8 @@ export function hideSidebar() {
 }
 
 export function loadTasks() {
-  console.log("TODO: Add later");
+  const contentContainer = document.getElementById("content");
+  let todoContainer = document.createElement("div");
+  todoContainer.id = "todo-list";
+  contentContainer.appendChild(todoContainer);
 }
