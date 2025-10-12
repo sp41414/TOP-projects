@@ -59,6 +59,28 @@ body {
   cursor: pointer;
 }
 
+#create-project-container,
+#create-task-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#create-project-task-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+#add-task,
+#add-project {
+  width: 50%;
+  padding: 1em;
+  font-size: 1.2em;
+  color: white;
+  border: none;
+  border-radius: 1em;
+  background-color: oklch(72.3% 0.219 149.579);
+}
+
 #content {
   flex: 1;
 }

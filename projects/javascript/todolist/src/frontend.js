@@ -6,6 +6,7 @@ export function loadSidebar() {
 
   let hideSidebarContainer = document.createElement("div");
   let sidebarTitle = document.createElement("div");
+  let createProjectTaskContainer = document.createElement("div");
   let createProjectContainer = document.createElement("div");
   let createTaskContainer = document.createElement("div");
 
@@ -13,19 +14,16 @@ export function loadSidebar() {
   sidebarTitle.id = "sidebar-title";
 
   createProjectContainer.id = "create-project-container";
+  createProjectTaskContainer.id = "create-project-task-container";
   createTaskContainer.id = "create-task-container";
 
   hideSidebarContainer.id = "hide-sidebar-container";
 
   sidebarContainer.appendChild(hideSidebarContainer);
   sidebarContainer.appendChild(sidebarTitle);
-  sidebarContainer.appendChild(createProjectContainer);
-  sidebarContainer.appendChild(createTaskContainer);
-
-  let addProjectContainer = document.createElement("div");
-  let addTaskContainer = document.createElement("div");
-  sidebarContainer.appendChild(addProjectContainer);
-  sidebarContainer.appendChild(addTaskContainer);
+  createProjectTaskContainer.appendChild(createProjectContainer);
+  createProjectTaskContainer.appendChild(createTaskContainer);
+  sidebarContainer.appendChild(createProjectTaskContainer);
 
   // Elements
   let hideSidebarIcon = document.createElement("div");
@@ -35,6 +33,15 @@ export function loadSidebar() {
     hideSidebar();
   });
 
+  let addProjectButton = document.createElement("button");
+  addProjectButton.id = "add-project";
+  addProjectButton.textContent = "Add Project";
+  let addTaskButton = document.createElement("button");
+  addTaskButton.id = "add-task";
+  addTaskButton.textContent = "Add Task";
+
+  createProjectContainer.appendChild(addProjectButton);
+  createTaskContainer.appendChild(addTaskButton);
   hideSidebarContainer.appendChild(hideSidebarIcon);
 }
 
