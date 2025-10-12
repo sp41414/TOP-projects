@@ -1,6 +1,4 @@
-import Project from "./projectManager";
+import "./style.css";
+import { loadSidebar, hideSidebar } from "./frontend";
 
-let defaultProject = new Project("default");
-
-defaultProject.addTodo("Hi", "Bye");
-console.log(defaultProject);
+loadSidebar();
