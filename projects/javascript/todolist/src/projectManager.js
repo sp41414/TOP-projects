@@ -1,59 +1,68 @@
-import Todo from "./todo.js";
+import Todo from "./todo";
+import Project from "./project";
+import Storage from "./storageManager";
 
-export default class Project {
-  constructor(name) {
-    this.name = name || "placeholder";
-    this.todoList = [];
-    localStorage.setItem(`project-${this.name}`, JSON.stringify(this.name));
+export default class ProjectManager {
+  constructor() {
+    this.storage = new Storage();
+    this.projects = this.loadProjects();
   }
-  setName(newName) {
-    const oldName = this.name;
-    this.name =
-      newName === undefined || newName === "" ? "placeholder" : newName;
-    localStorage.removeItem(`project-${oldName}`);
-    localStorage.removeItem(`todo-list-${oldName}`);
-    localStorage.setItem(`project-${this.name}`, this.name);
-    localStorage.setItem(
-      `todo-list-${this.name}`,
-      JSON.stringify(this.todoList),
-    );
+  loadProjects() {
+    const projectsFromStorage = this.storage.getProjects();
+    return projectsFromStorage.map((proj) => {
+      const todos = proj.todos.map((todo) => {
+        return new Todo(
+          todo.id,
+          todo.title,
+          todo.description,
+          todo.dueDate,
+          todo.priority,
+          todo.notes,
+          todo.check,
+        );
+      });
+      return new Project(proj.id, proj.name, todos);
+    });
   }
-  createTodo(name, description, dueDate, priority, note) {
-    let newTodoItem = new Todo(name, description, dueDate, priority, note);
-    this.todoList.push(newTodoItem);
-    localStorage.setItem(
-      `todo-list-${this.name}`,
-      JSON.stringify(this.todoList),
-    );
+  saveProjects() {
+    const projects = this.projects.map((proj) => {
+      return proj.getObject();
+    });
+    this.storage.storeProjects(projects);
   }
-  addTodo(object) {
-    this.todoList.push(object);
-    localStorage.setItem(
-      `todo-list-${this.name}`,
-      JSON.stringify(this.todoList),
-    );
+  createProject(name) {
+    const newID = crypto.randomUUID();
+	const newProject = new Project(newID, name);
+	this.projects.push(newProject);
+	this.saveProjects();
+	return newProject;
   }
-  deleteTodo(index) {
-    this.todoList.splice(index, 1);
-    localStorage.setItem(
-      `todo-list-${this.name}`,
-      JSON.stringify(this.todoList),
-    );
+  deleteProject(projectID) {
+	  this.projects = this.projects.filter((item) => item.id !== projectID);
+	  this.saveProjects();
   }
-  loadTodos() {
-    const storedTodos = localStorage.getItem(`todo-list-${this.name}`);
-    if (storedTodos) {
-      const parsedTodos = JSON.parse(storedTodos);
-      this.todoList = parsedTodos.map(
-        (todo) =>
-          new Todo(
-            todo.name,
-            todo.description,
-            todo.dueDate,
-            todo.priority,
-            todo.note,
-          ),
-      );
-    }
+  getProjects() {
+	  return this.projects;
+  }
+  addTodo(projectID, title, description, dueDate, priority, notes, check) {
+	const project = this.projects.find((item) => item.id === projectID);
+	const todoID = crypto.randomUUID();
+	const todo = new Todo(todoID, title, description, dueDate, priority, notes, check);
+	project.todos.push(todo);
+	this.saveProjects();
+	return todo;
+  }
+  updateTodo(projectID, todoID, updates) {
+	  const project = this.projects.find((item) => item.id === projectID);
+	  const todo = project.todos.find((item) => item.id === todoID);
+	  if (todo && updates && typeof updates === 'object') {
+		  Object.assign(todo, updates);
+		  this.saveProjects();
+	  }
+  }
+  deleteTodo(projectID, todoID) {
+	  const project = this.projects.find((item) => item.id === projectID);
+	  project.todos = project.todos.filter((item) => item.id !== todoID);
+	  this.saveProjects();
   }
 }

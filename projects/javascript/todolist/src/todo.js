@@ -1,43 +1,23 @@
 export default class Todo {
-  constructor(title, description, dueDate, priority, note) {
-    this.title = String(title);
-    this.description = String(description);
-
-    this.priority = priority === undefined ? "High" : String(priority);
-
-    this.note = note === undefined ? "" : String(note);
-    this.dueDate = new Date(dueDate);
-    this.check = false;
+  constructor(id, title, description, dueDate, priority, notes, check) {
+	  this.id = id;
+    this.title = title;
+    this.description = description || "";
+    this.dueDate = dueDate ?
+      new Date(dueDate).toISOString().split("T")[0] : "";
+    this.priority = priority || "High";
+    this.notes = notes || "";
+    this.check = check || false;
   }
-
-  // Reassigning functions
-
-  toggleCheck() {
-    this.check = this.check === false ? true : false;
-  }
-
-  setTitle(newTitle) {
-    this.title = newTitle === undefined || newTitle === "" ? "" : newTitle;
-  }
-
-  setDescription(newDescription) {
-    this.description =
-      newDescription === undefined || newDescription === ""
-        ? ""
-        : newDescription;
-  }
-
-  setPriority(newPriority) {
-    this.priority =
-      newPriority === undefined || newPriority === "" ? "High" : newPriority;
-  }
-
-  setDueDate(newDate) {
-    this.dueDate =
-      newDate === undefined || newDate === "" ? new Date() : new Date(newDate);
-  }
-
-  setNote(newNote) {
-    this.note = newNote === undefined ? "" : newNote;
+  getObject() {
+    return {
+      id: this.id,
+      title: this.title,
+      description: this.description,
+      dueDate: this.dueDate,
+      priority: this.priority,
+      notes: this.notes,
+      check: this.check,
+    };
   }
 }
