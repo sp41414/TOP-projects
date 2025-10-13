@@ -32,37 +32,45 @@ export default class ProjectManager {
   }
   createProject(name) {
     const newID = crypto.randomUUID();
-	const newProject = new Project(newID, name);
-	this.projects.push(newProject);
-	this.saveProjects();
-	return newProject;
+    const newProject = new Project(newID, name);
+    this.projects.push(newProject);
+    this.saveProjects();
+    return newProject;
   }
   deleteProject(projectID) {
-	  this.projects = this.projects.filter((item) => item.id !== projectID);
-	  this.saveProjects();
+    this.projects = this.projects.filter((item) => item.id !== projectID);
+    this.saveProjects();
   }
   getProjects() {
-	  return this.projects;
+    return this.projects;
   }
   addTodo(projectID, title, description, dueDate, priority, notes, check) {
-	const project = this.projects.find((item) => item.id === projectID);
-	const todoID = crypto.randomUUID();
-	const todo = new Todo(todoID, title, description, dueDate, priority, notes, check);
-	project.todos.push(todo);
-	this.saveProjects();
-	return todo;
+    const project = this.projects.find((item) => item.id === projectID);
+    const todoID = crypto.randomUUID();
+    const todo = new Todo(
+      todoID,
+      title,
+      description,
+      dueDate,
+      priority,
+      notes,
+      check,
+    );
+    project.todos.push(todo);
+    this.saveProjects();
+    return todo;
   }
   updateTodo(projectID, todoID, updates) {
-	  const project = this.projects.find((item) => item.id === projectID);
-	  const todo = project.todos.find((item) => item.id === todoID);
-	  if (todo && updates && typeof updates === 'object') {
-		  Object.assign(todo, updates);
-		  this.saveProjects();
-	  }
+    const project = this.projects.find((item) => item.id === projectID);
+    const todo = project.todos.find((item) => item.id === todoID);
+    if (todo && updates && typeof updates === "object") {
+      Object.assign(todo, updates);
+      this.saveProjects();
+    }
   }
   deleteTodo(projectID, todoID) {
-	  const project = this.projects.find((item) => item.id === projectID);
-	  project.todos = project.todos.filter((item) => item.id !== todoID);
-	  this.saveProjects();
+    const project = this.projects.find((item) => item.id === projectID);
+    project.todos = project.todos.filter((item) => item.id !== todoID);
+    this.saveProjects();
   }
 }

@@ -60,7 +60,8 @@ body {
 }
 
 #create-project-container,
-#create-task-container {
+#create-task-container,
+#delete-project-container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -79,6 +80,18 @@ body {
   border: none;
   border-radius: 1em;
   background-color: oklch(72.3% 0.219 149.579);
+}
+#delete-project {
+  width: 50%;
+  padding: 1em;
+  font-size: 1.2em;
+  color: white;
+  border: none;
+  border-radius: 1em;
+  background-color: oklch(64.5% 0.246 16.439);
+}
+#delete-project:hover {
+  background-color: oklch(51.4% 0.222 16.935);
 }
 #add-task:hover,
 #add-project:hover {
