@@ -102,7 +102,7 @@ export function hideSidebar() {
   hideSidebarIcon.addEventListener("click", () => {
     // so that the loadSidebar can find the sidebar container
     sidebarContainer.id = "sidebar";
-    loadSidebar();
+    loadSidebar(projectManagerGlobal);
   });
 }
 
@@ -124,6 +124,7 @@ function createProjectPopup() {
   const popup = document.createElement("div");
   popup.id = "project-popup";
   popup.className = "popup-overlay";
+  popup.style.display = "none";
   let popupContent = document.createElement("div");
   popupContent.className = "popup-content";
   let popupHeader = document.createElement("div");
@@ -177,6 +178,7 @@ function createProjectPopup() {
 
 function createTaskPopup() {
   const popup = document.createElement("div");
+  popup.style.display = "none";
   popup.id = "task-popup";
   popup.className = "popup-overlay";
   popup.innerHTML = `
@@ -232,7 +234,6 @@ function createTaskPopup() {
 
 function renderProjectsDropdown() {
   const chooseProject = document.getElementById("choose-project-dropdown");
-  chooseProject.innerHTML = `<option value="">Select Project</option>`;
   projectManagerGlobal.getProjects().forEach((proj) => {
     const option = document.createElement("option");
     option.value = proj.id;
@@ -251,15 +252,19 @@ export function renderTasks(projectID) {
     const card = document.createElement("div");
     card.className = "todo-card";
     const renderViewMode = () => {
+      const date = new Date();
       card.innerHTML = `
 			<div class="todo-title">${todo.title}</div>
 			<p>${todo.description}</p>
-			<p>Due: ${todo.dueDate}</p>
-			<p>Priority: ${todo.priority}</p>
+			<p id="${new Date(todo.dueDate) > date ? "notDue" : "due"}">Due: ${todo.dueDate}</p>
+			<p id="${todo.priority}">Priority: ${todo.priority}</p>
 			<p>Notes: ${todo.notes}</p>
+			<p>Complete?</p>
 			<input type="checkbox" ${todo.check ? "checked" : ""} class="todo-check">
-			<button class="edit-todo">Edit</button>
-			<button class="delete-todo">Delete</button>
+			<div class="button-container">
+			  <button class="edit-todo">Edit</button>
+			  <button class="delete-todo">Delete</button>
+			</div>
 		`;
       card.querySelector(".todo-check").addEventListener("change", (e) => {
         projectManagerGlobal.updateTodo(projectID, todo.id, {
@@ -276,22 +281,24 @@ export function renderTasks(projectID) {
     };
     const renderEditMode = () => {
       card.innerHTML = `
-				<input type="text" value="${todo.title}" class="edit-title" required>
-				<textarea class="edit-description">${todo.description}</textarea>
-				<input type="date" value="${todo.dueDate}" class="edit-due-date">
-				<select class="edit-priority">
-				  <option value="High" ${todo.priority === "High" ? "selected" : ""}>High</option>
-				  <option value="Medium" ${todo.priority === "Medium" ? "selected" : ""}>Medium</option>
-				  <option value="Low" ${todo.priority === "Low" ? "selected" : ""}>Low</option>
-				</select>
-				<textarea class="edit-notes">${todo.notes}</textarea>
-				<input type="checkbox" ${todo.check ? "checked" : ""} class="todo-check">
-				<button class="save-todo">Save</button>
-				<button class="cancel-edit">Cancel</button>
+				<form id="edit-form">
+				  <input type="text" value="${todo.title}" class="edit-title" required>
+				  <textarea class="edit-description">${todo.description}</textarea>
+				  <input type="date" value="${todo.dueDate}" class="edit-due-date">
+				  <select class="edit-priority">
+				    <option value="High" ${todo.priority === "High" ? "selected" : ""}>High</option>
+				    <option value="Medium" ${todo.priority === "Medium" ? "selected" : ""}>Medium</option>
+				    <option value="Low" ${todo.priority === "Low" ? "selected" : ""}>Low</option>
+				  </select>
+				  <textarea class="edit-notes">${todo.notes}</textarea>
+				  <input type="checkbox" ${todo.check ? "checked" : ""} class="todo-check">
+				  <button class="save-todo">Save</button>
+				  <button class="cancel-edit">Cancel</button>
+				</form>
 			`;
       card.querySelector(".save-todo").addEventListener("click", () => {
-        if (!card.checkValidity()) {
-          card.reportValidity();
+        if (!card.querySelector("#edit-form").checkValidity()) {
+          card.querySelector("#edit-form").reportValidity();
           return;
         }
         const updates = {

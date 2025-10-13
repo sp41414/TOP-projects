@@ -90,11 +90,14 @@ body {
   border-radius: 1em;
   background-color: oklch(64.5% 0.246 16.439);
 }
-#delete-project:hover {
+#delete-project:hover,
+.delete-todo:hover {
   background-color: oklch(51.4% 0.222 16.935);
+  cursor: pointer;
 }
 #add-task:hover,
-#add-project:hover {
+#add-project:hover,
+.edit-todo:hover {
   background-color: oklch(62.7% 0.194 149.214);
   cursor: pointer;
 }
@@ -128,4 +131,81 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-template-rows: min-content;
+  gap: 1em;
+}
+
+.todo-card {
+  display: flex;
+  background-color: oklch(92.9% 0.013 255.508);
+  flex-direction: column;
+  padding: 1em;
+  border-radius: 2em;
+  gap: 0.3em;
+  overflow-wrap: break-word;
+}
+.todo-title {
+  font-weight: bold;
+  font-size: 2em;
+}
+#High,
+#due {
+  color: oklch(63.7% 0.237 25.331);
+}
+#Medium {
+  color: oklch(79.5% 0.184 86.047);
+}
+#Low,
+#notDue {
+  color: oklch(72.3% 0.219 149.579);
+}
+input[type="checkbox"] {
+  width: 1.5em;
+  height: 1.5em;
+  border: 1px solid #bdc1c6;
+  border-radius: 4px;
+  appearance: none;
+  outline: 0;
+  cursor: pointer;
+  transition: background 175ms cubic-bezier(0.1, 0.1, 0.25, 1);
+  &::before {
+    position: absolute;
+    content: "";
+    display: block;
+    top: 2px;
+    left: 7px;
+    width: 8px;
+    height: 14px;
+    border-style: solid;
+    border-color: white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+  }
+  &:checked {
+    color: white;
+    border-color: #06842c;
+    background: #06842c;
+    &::before {
+      opacity: 1;
+    }
+  }
+}
+.button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3em;
+}
+.edit-todo,
+.delete-todo {
+  padding: 0.5em;
+  font-size: 1.2em;
+  background-color: oklch(72.3% 0.219 149.579);
+  color: white;
+  border-radius: 1em;
+  width: 50%;
+}
+.delete-todo {
+  background-color: oklch(64.5% 0.246 16.439);
 }
