@@ -235,6 +235,7 @@ function createTaskPopup() {
 
 function renderProjectsDropdown() {
   const chooseProject = document.getElementById("choose-project-dropdown");
+  chooseProject.innerHTML = "";
   projectManagerGlobal.getProjects().forEach((proj) => {
     const option = document.createElement("option");
     option.value = proj.id;
