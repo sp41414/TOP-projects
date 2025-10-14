@@ -113,7 +113,7 @@ export function loadTasks(projectManager, projectID) {
 
 function showPopup(ID) {
   const popup = document.getElementById(ID);
-  popup.style.display = "flex";
+  popup.style.display = popup.style.display === "none" ? "flex" : "none";
 }
 function hidePopup(ID) {
   const popup = document.getElementById(ID);
@@ -133,6 +133,7 @@ function createProjectPopup() {
   let popupForm = document.createElement("form");
   popupForm.id = "project-form";
   let popupFormLabel = document.createElement("label");
+  popupFormLabel.textContent = "Name:";
   let popupFormInput = document.createElement("input");
   popupFormInput.type = "text";
   popupFormInput.id = "project-name";
@@ -187,10 +188,10 @@ function createTaskPopup() {
 			<form id="task-form">
 				<input type="hidden" id="task-project-id">
 				<label>Title: <input type="text" id="task-title" required></label>
-				<label>Description: <textarea id="task-description"></textarea></label>
+				<label>Description: <textarea id="task-description" maxlength="100"></textarea><p>Max length: 100</p></label>
 				<label>Due Date: <input type="date" id="task-dueDate"></label>
 				<label>Priority: <select id="task-priority"><option value="High">High</option> <option value="Medium">Medium</option> <option value="Low">Low</option></select></label>
-				<label>Notes: <textarea id="task-notes"></textarea></label>
+				<label>Notes: <textarea id="task-notes" maxlength="100"></textarea><p>Max length: 100</p></label>
 				<div class="popup-buttons">
 					<button type="button" id="submit-task">Add</button>
 					<button type="button" id="cancel-task">Cancel</button>

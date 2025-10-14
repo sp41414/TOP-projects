@@ -91,13 +91,15 @@ body {
   background-color: oklch(64.5% 0.246 16.439);
 }
 #delete-project:hover,
-.delete-todo:hover {
+.delete-todo:hover,
+#cancel-task:hover {
   background-color: oklch(51.4% 0.222 16.935);
   cursor: pointer;
 }
 #add-task:hover,
 #add-project:hover,
-.edit-todo:hover {
+.edit-todo:hover,
+#submit-task:hover {
   background-color: oklch(62.7% 0.194 149.214);
   cursor: pointer;
 }
@@ -206,6 +208,58 @@ input[type="checkbox"] {
   border-radius: 1em;
   width: 50%;
 }
-.delete-todo {
+.delete-todo,
+#cancel-task,
+#cancel-project {
   background-color: oklch(64.5% 0.246 16.439);
+}
+.popup-overlay {
+  position: fixed;
+  margin: auto;
+  height: max-content;
+  width: clamp(200px, 60%, 700px);
+  inset: 0;
+  background-color: oklch(86.9% 0.022 252.894);
+  border: none;
+  padding: 2em;
+  border-radius: 2em;
+}
+
+.popup-overlay form {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+.popup-overlay button {
+  width: 100%;
+  padding: 0.5em;
+  margin: 0.3em;
+  color: white;
+  border-radius: 1em;
+  font-size: 1.2em;
+}
+.popup-overlay label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+}
+.popup-header {
+  font-size: 2em;
+  margin-bottom: 0.5em;
+  font-weight: 1000;
+}
+.popup-overlay textarea {
+  resize: vertical;
+  border-radius: 0.4em;
+  border: none;
+}
+.popup-overlay input {
+  border-radius: 1em;
+  border: none;
+  padding: 0.5em;
+}
+#submit-task,
+#submit-project {
+  background-color: oklch(72.3% 0.219 149.579);
 }
