@@ -92,13 +92,14 @@ body {
 }
 #delete-project:hover,
 .delete-todo:hover,
+.cancel-edit:hover,
 #cancel-task:hover {
   background-color: oklch(51.4% 0.222 16.935);
   cursor: pointer;
 }
 #add-task:hover,
 #add-project:hover,
-.edit-todo:hover,
+.save-todo:hover,
 #submit-task:hover {
   background-color: oklch(62.7% 0.194 149.214);
   cursor: pointer;
@@ -225,13 +226,15 @@ input[type="checkbox"] {
   border-radius: 2em;
 }
 
-.popup-overlay form {
+.popup-overlay form,
+#edit-form {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   gap: 1em;
 }
-.popup-overlay button {
+.popup-overlay button,
+#edit-form button {
   width: 100%;
   padding: 0.5em;
   margin: 0.3em;
@@ -249,17 +252,23 @@ input[type="checkbox"] {
   margin-bottom: 0.5em;
   font-weight: 1000;
 }
-.popup-overlay textarea {
+.popup-overlay textarea,
+#edit-form textarea {
   resize: vertical;
   border-radius: 0.4em;
   border: none;
 }
-.popup-overlay input {
+.popup-overlay input,
+#edit-form input {
   border-radius: 1em;
   border: none;
   padding: 0.5em;
 }
 #submit-task,
-#submit-project {
+#submit-project,
+.save-todo {
   background-color: oklch(72.3% 0.219 149.579);
+}
+.cancel-edit {
+  background-color: oklch(64.5% 0.246 16.439);
 }
