@@ -110,7 +110,9 @@ body {
   align-items: center;
   justify-content: center;
 }
-#choose-project-dropdown {
+#choose-project-dropdown,
+#task-priority,
+.edit-priority {
   width: 50%;
   border: none;
   border-radius: 2em;
@@ -224,6 +226,8 @@ input[type="checkbox"] {
   border: none;
   padding: 2em;
   border-radius: 2em;
+  display: flex;
+  flex-direction: column;
 }
 
 .popup-overlay form,
@@ -271,4 +275,12 @@ input[type="checkbox"] {
 }
 .cancel-edit {
   background-color: oklch(64.5% 0.246 16.439);
+}
+input:invalid,
+textarea:invalid {
+  border: 2px solid oklch(64.5% 0.246 16.439);
+}
+input:valid,
+textarea:valid {
+  border: 2px solid oklch(72.3% 0.219 149.579);
 }
