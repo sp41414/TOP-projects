@@ -1,0 +1,14 @@
+{
+  "name": "dropdown-practice12112",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/index.js",
+  "scripts": {
+    "build": "npx webpack",
+    "dev": "npx webpack serve"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module"
+}
