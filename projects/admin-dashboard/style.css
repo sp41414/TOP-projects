@@ -345,8 +345,8 @@ body {
   display: flex;
   gap: 0.8em;
   position: absolute;
-  bottom:0;
-  right:0;
+  bottom: 0;
+  right: 0;
   padding: 1em;
 }
 .card-footer svg {
@@ -399,7 +399,7 @@ body {
   background-color: white;
   border-radius: 1em;
   margin-left: 1em;
-  margin-top: 1em;  
+  margin-top: 1em;
   padding: 2em;
   height: min-content;
 }

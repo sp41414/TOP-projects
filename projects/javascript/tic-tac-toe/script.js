@@ -5,10 +5,10 @@ const gameBoard = (() => {
   let gameBoardref = [0, 0, 0, 0, 0, 0, 0, 0, 0];
   let currentMarker = 1;
   const gameMove = (marker, position) => {
-	if (gameBoard[position] === 0) {
-   		gameBoard[position] = marker;
-    	gameBoardref[position] = marker;
-	}
+    if (gameBoard[position] === 0) {
+      gameBoard[position] = marker;
+      gameBoardref[position] = marker;
+    }
   };
   const checkWin = () => {
     const winningLines = [
@@ -34,12 +34,18 @@ const gameBoard = (() => {
     return { check };
   };
   // i felt like the check win would be TOO LONG if i added yet another block of code
-  const removeEventListeners = ( ) => {
-	document.querySelectorAll(".cell").forEach(cell => {
-		cell.replaceWith(cell.cloneNode(true)); // this is what removes the event listener
-	})
-  }
-  return { gameMove, currentMarker, gameBoardref, checkWin, removeEventListeners };
+  const removeEventListeners = () => {
+    document.querySelectorAll(".cell").forEach((cell) => {
+      cell.replaceWith(cell.cloneNode(true)); // this is what removes the event listener
+    });
+  };
+  return {
+    gameMove,
+    currentMarker,
+    gameBoardref,
+    checkWin,
+    removeEventListeners,
+  };
 })();
 
 const Player = (marker) => {
@@ -47,7 +53,7 @@ const Player = (marker) => {
     if (marker === gameBoard.currentMarker) {
       gameBoard.gameMove(marker, position);
       const cell = document.getElementById(`${position}`);
-	  if (cell.textContent !== "") return;
+      if (cell.textContent !== "") return;
       cell.textContent = marker < 2 ? "X" : "O";
       const winnerText = document.getElementById("winner-text");
       const winnerContainer = document.getElementById("winner");
@@ -60,7 +66,7 @@ const Player = (marker) => {
           location.reload();
         });
         winnerText.textContent = `The Winner is ${gameBoard.checkWin().check(gameBoard.gameBoardref).winner}`;
-		gameBoard.removeEventListeners();
+        gameBoard.removeEventListeners();
       } else if (!gameBoard.gameBoardref.includes(0)) {
         // DRAW
         winnerText.textContent = `It's a DRAW!`;
@@ -70,7 +76,7 @@ const Player = (marker) => {
         restartButton.addEventListener("click", () => {
           location.reload();
         });
-		gameBoard.removeEventListeners();
+        gameBoard.removeEventListeners();
       } else {
         gameBoard.currentMarker = gameBoard.currentMarker === 1 ? 2 : 1;
         AI.move(gameBoard.gameBoardref, marker);
@@ -118,7 +124,7 @@ function initializeGameBoard() {
     gameContainer.appendChild(cell);
   }
   if (player.marker === 2 && gameBoard.currentMarker === 1) {
-	  AI.move(gameBoard.gameBoardref, 2);
+    AI.move(gameBoard.gameBoardref, 2);
   }
 }
 
