@@ -86,17 +86,19 @@ newBookButton.onclick = () => {
   form.style.display = "block";
 };
 
-const form = document.getElementById("book-form");
 const formContainer = document.getElementById("form-container");
 const submitButton = document.getElementById("submit");
 
 submitButton.onclick = () => {
-  const answers = form.getElementsByTagName("input");
-  if (!form.checkValidity()) {
-    form.reportValidity();
+  const bookName = document.getElementById("book-name");
+  const bookAuthor = document.getElementById("book-author");
+  const bookRelease = document.getElementById("book-release-date");
+  if (bookName.validity.valueMissing) {
+    bookName.setCustomValidity("You must enter a book name");
+    bookName.reportValidity();
     return;
   }
-  const book = new Book(answers[0].value, answers[1].value, answers[2].value);
+  const book = new Book(bookName.value, bookAuthor.value, bookRelease.value);
   addBookToLibrary(book);
   displayBooks(library);
   formContainer.style.display = "none";
