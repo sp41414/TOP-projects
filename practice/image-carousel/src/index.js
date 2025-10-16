@@ -1,2 +1,6 @@
 import imageCarousel from "./imageCarousel.js";
-imageCarousel(["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQykzoZeCE0p7LeuyHnLYCdPP2jju9d5PaMeA&s", "https://static.vecteezy.com/system/resources/thumbnails/036/324/708/small/ai-generated-picture-of-a-tiger-walking-in-the-forest-photo.jpg", "https://static.vecteezy.com/vite/assets/photo-masthead-375-BoK_p8LG.webp"]);
+imageCarousel([
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQykzoZeCE0p7LeuyHnLYCdPP2jju9d5PaMeA&s",
+  "https://static.vecteezy.com/system/resources/thumbnails/036/324/708/small/ai-generated-picture-of-a-tiger-walking-in-the-forest-photo.jpg",
+  "https://static.vecteezy.com/vite/assets/photo-masthead-375-BoK_p8LG.webp",
+]);
