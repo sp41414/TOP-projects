@@ -1,10 +1,11 @@
 {
-  "name": "webpack-practie",
+  "name": "webpack-practice",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "webpack.config.js",
   "scripts": {
-    "test": "python3 -m http.server"
+    "build": "npx webpack",
+    "dev": "npx webpack serve"
   },
   "keywords": [],
   "author": "",
