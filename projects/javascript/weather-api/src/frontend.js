@@ -1,5 +1,35 @@
+import getWeather from "./getWeather";
 export default function loadFrontend(location, description, days) {
   const container = document.getElementById("container");
+  container.innerHTML = "";
+  let header = document.createElement("h1");
+  header.textContent = "Minimalist Weather App";
+  container.appendChild(header);
+  let label = document.createElement("label");
+  label.htmlFor = "location";
+  label.textContent = "Location:";
+  container.appendChild(label);
+  let input = document.createElement("input");
+  input.type = "text";
+  input.name = "location";
+  input.id = "location";
+  input.required = true;
+  container.appendChild(input);
+  let submitButton = document.createElement("button");
+  submitButton.id = "submit-button";
+  submitButton.textContent = "Submit";
+  submitButton.addEventListener("click", async () => {
+    let location = input.value.trim();
+    let weather = await getWeather(location);
+    if (weather.address || weather.description || weather.days) {
+      loadFrontend(weather.address, weather.description, weather.days);
+      input.setCustomValidity("");
+    } else {
+      input.setCustomValidity("Invalid location, please try again");
+      input.reportValidity();
+    }
+  });
+  container.appendChild(submitButton);
   let locationContainer = document.createElement("div");
   let descriptionContainer = document.createElement("div");
   let daysContainer = document.createElement("div");
