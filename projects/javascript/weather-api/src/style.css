@@ -1,0 +1,78 @@
+* {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+body {
+  margin: 0px;
+  padding: 0px;
+  background-color: black;
+  color: white;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.container {
+  height: fit-content;
+  align-items: center;
+  gap: 1em;
+  margin: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.location-container {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.days-container {
+  display: grid;
+  padding: 1em;
+  box-sizing: border-box;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-rows: min-content;
+  flex: 1;
+  gap: 1em;
+  width: 100%;
+}
+
+.day {
+  border-radius: 2em;
+  background-color: oklch(27.9% 0.041 260.031);
+  display: flex;
+  padding: 1em;
+  align-items: center;
+  flex-direction: column;
+}
+
+.footer {
+  position: relative;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.footer p {
+  font-size: 0.5em;
+  color: oklch(55.4% 0.046 257.417);
+}
+.freezing {
+  color: oklch(50% 0.134 242.749);
+}
+.cold {
+  color: oklch(86.5% 0.127 207.078);
+}
+.normal {
+  color: oklch(79.2% 0.209 151.711);
+}
+.warm {
+  color: oklch(87.9% 0.169 91.605);
+}
+.hot {
+  color: oklch(63.7% 0.237 25.331);
+}
+.furnace {
+  color: oklch(50.5% 0.213 27.518);
+}
