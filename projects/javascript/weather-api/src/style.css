@@ -1,0 +1,43 @@
+* {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+body {
+  margin: 0px;
+  padding: 0px;
+  background-color: black;
+  color: white;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.container {
+  height: fit-content;
+  align-items: center;
+  gap: 1em;
+  margin: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.location-container {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.days-container {
+  display: grid;
+  padding: 1em;
+  box-sizing: border-box;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-rows: min-content;
+  flex: 1;
+  gap: 1em;
+  width: 100%;
+}
+
+.day {
+  border-radius: 2em;
+  background-color: oklch(27.9% 0.041 260.031);
+}
