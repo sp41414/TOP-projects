@@ -76,7 +76,8 @@ body {
 .furnace {
   color: oklch(50.5% 0.213 27.518);
 }
-input[type="text"] {
+input[type="text"],
+#location {
   border-radius: 1em;
   padding: 0.5em;
   background-color: oklch(27.9% 0.041 260.031);
