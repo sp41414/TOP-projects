@@ -1,5 +1,9 @@
 let gridContainer = document.getElementById("gridContainer");
 
+function generateRandomNumber() {
+  return Math.floor(Math.random() * 250) + 1;
+}
+
 // Create divs in container so we can have a 16x16 grid.
 function createGrid(size) {
   for (let i = 1; i <= size; i++) {
@@ -8,7 +12,7 @@ function createGrid(size) {
     column.id = `column${i}`;
     // add hover to draw for columns
     column.onmouseover = () => {
-      column.style.backgroundColor = "black";
+      column.style.cssText = `background-color: rgb(${generateRandomNumber()}, ${generateRandomNumber()}, ${generateRandomNumber()});`;
     };
     gridContainer.appendChild(column);
     for (let j = 1; j <= size; j++) {
@@ -17,7 +21,7 @@ function createGrid(size) {
       row.id = `row${j}`;
       // add hover to draw for rows
       row.onmouseover = () => {
-        row.style.backgroundColor = "black";
+        row.style.cssText = `background-color: rgb(${generateRandomNumber()}, ${generateRandomNumber()}, ${generateRandomNumber()});`;
       };
       column.appendChild(row);
     }
