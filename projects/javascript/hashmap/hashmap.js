@@ -155,6 +155,9 @@ class HashMap {
   get(key) {
     // first get the index of the bucket
     let hashedKey = this.hash(key);
+    if (hashedKey < 0 || hashedKey >= this.linkedLists.length) {
+      throw new Error("Accessing linkedLists out of bounds");
+    }
     // if the bucket is empty, return null
     if (this.linkedLists[hashedKey] === null) {
       return null;
@@ -173,6 +176,9 @@ class HashMap {
   }
   has(key) {
     let hashedKey = this.hash(key);
+    if (hashedKey < 0 || hashedKey >= this.linkedLists.length) {
+      throw new Error("Accessing linkedLists out of bounds");
+    }
     if (this.linkedLists[hashedKey] === null) {
       return false;
     } else {
@@ -188,6 +194,9 @@ class HashMap {
   }
   remove(key) {
     let hashedKey = this.hash(key);
+    if (hashedKey < 0 || hashedKey >= this.linkedLists.length) {
+      throw new Error("Accessing linkedLists out of bounds");
+    }
     if (this.linkedLists[hashedKey] === null) {
       return false;
     } else {
