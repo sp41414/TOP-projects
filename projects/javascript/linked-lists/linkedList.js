@@ -1,46 +1,57 @@
-class LinkedList {
-  constructor() {
-    this.list = [];
-  }
-  append(value) {
-    this.list.push(value);
-  }
-  prepend(value) {
-    this.list.unshift(value);
-  }
-  size() {
-    return this.list.length;
-  }
-  head() {
-    return this.list[0];
-  }
-  tail() {
-    return this.list[this.list.length - 1];
-  }
-  at(index) {
-    return index in this.list ? this.list[index] : null;
-  }
-  pop() {
-    this.list.pop();
-  }
-  contains(value) {
-    return this.list.includes(value);
-  }
-  find(value) {
-    const foundValue = this.list.indexOf(value);
-    return foundValue !== -1 ? foundValue : null;
-  }
-  toString() {
-    let array = this.list;
-    let string = ``;
-    for (let i = 0; i < array.length; i++) {
-      string += ` ( ${array[i]} ) ->`;
-    }
-    string += " null";
-    return string;
+class Node {
+  constructor(value = null, nextNode = null) {
+    this.value = value;
+    this.nextNode = nextNode;
   }
 }
 
+class LinkedList {
+  constructor() {
+    this.head = null;
+    this.length = 0;
+  }
+  append(value) {
+    let node = new Node(value);
+    if (this.head === null) {
+      this.head = node;
+    } else {
+      let last = this.head;
+      while (last.nextNode !== null) {
+        last = last.nextNode;
+      }
+      last.nextNode = node;
+    }
+    this.length += 1;
+    return node;
+  }
+  prepend(value) {
+    let node = new Node(value);
+    if (this.head === null) {
+      this.head = node;
+    } else {
+      node.nextNode = this.head;
+      this.head = node;
+    }
+    this.length += 1;
+    return node;
+  }
+  size() {
+    return this.length;
+  }
+  head() {
+    return this.head;
+  }
+  toString() {
+    let currentNode = this.head;
+    let string = "";
+    while (currentNode !== null) {
+      string += currentNode.value + " -> ";
+      currentNode = currentNode.nextNode;
+    }
+    string += null;
+    return string;
+  }
+}
 const list = new LinkedList();
 
 list.append("dog");
@@ -49,21 +60,5 @@ list.append("parrot");
 list.append("hamster");
 list.append("snake");
 list.append("turtle");
-list.prepend("rabbit");
 console.log(list.toString());
 console.log(list.size());
-console.log(list.head());
-console.log(list.tail());
-console.log(list.at(4));
-console.log(list.contains("rabbit"));
-console.log(list.find("dog"));
-
-// unused class
-/*
-class Node {
-  constructor(value = null, nextNode = null) {
-    this.value = value;
-    this.nextNode = nextNode;
-  }
-}
-*/
