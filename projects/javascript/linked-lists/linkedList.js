@@ -38,8 +38,65 @@ class LinkedList {
   size() {
     return this.length;
   }
-  head() {
-    return this.head;
+  getHead() {
+    return this.head.value;
+  }
+  // could track tail using this.tail() but this is also fine for now...
+  getTail() {
+    let currentNode = this.head;
+    while (currentNode.nextNode !== null) {
+      currentNode = currentNode.nextNode;
+    }
+    return currentNode.value;
+  }
+  at(index) {
+    let currentIndex = 0; // could be 1 but im gonna stick with 0
+    let currentNode = this.head;
+    while (currentNode.nextNode !== null) {
+      if (currentIndex === index) {
+        return currentNode.value;
+      }
+      currentIndex++;
+      currentNode = currentNode.nextNode;
+    }
+  }
+  pop() {
+    let currentNode = this.head;
+    if (currentNode === null) {
+      return;
+    }
+    if (currentNode.nextNode === null) {
+      this.head = null;
+      this.length--;
+      return;
+    }
+    while (currentNode.nextNode.nextNode !== null) {
+      currentNode = currentNode.nextNode;
+    }
+    currentNode.nextNode = null;
+    this.length--;
+  }
+  contains(value) {
+    let currentNode = this.head;
+    while (currentNode !== null) {
+      if (currentNode.value === value) {
+        return true;
+      }
+      currentNode = currentNode.nextNode;
+    }
+    return false;
+  }
+  find(value) {
+    let currentNode = this.head;
+    let currentIndex = 0;
+    while (currentNode !== null) {
+      if (currentNode.value === value) {
+        return currentIndex;
+      }
+      currentIndex++;
+      currentNode = currentNode.nextNode;
+    }
+    return null;
   }
   toString() {
     let currentNode = this.head;
@@ -62,3 +119,8 @@ list.append("snake");
 list.append("turtle");
 console.log(list.toString());
 console.log(list.size());
+list.pop();
+console.log(list.toString());
+console.log(list.getHead());
+console.log(list.getTail());
+console.log(list.at(2));
