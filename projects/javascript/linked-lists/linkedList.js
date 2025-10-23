@@ -124,3 +124,13 @@ console.log(list.toString());
 console.log(list.getHead());
 console.log(list.getTail());
 console.log(list.at(2));
+
+// Output:
+/*
+dog -> cat -> parrot -> hamster -> snake -> turtle -> null
+6
+dog -> cat -> parrot -> hamster -> snake -> null
+dog
+snake
+parrot
+*/
