@@ -240,23 +240,101 @@ class HashMap {
     }
   }
   remove(key) {
+    // first hash the key to find the bucket
     let hashedKey = this.hash(key);
     if (hashedKey < 0 || hashedKey >= this.linkedLists.length) {
       throw new Error("Accessing linkedLists out of bounds");
     }
     if (this.linkedLists[hashedKey] === null) {
+      // couldnt find key
       return false;
     } else {
+      // go through the linked list and if the key is found using find(), use deleteAt()
       let currentNode = this.linkedLists[hashedKey].head;
       while (currentNode !== null) {
-        if (currentNode[0].value === key) {
+        if (currentNode.value[0] === key) {
+          let index = this.linkedLists[hashedKey].find(currentNode.value);
+          this.linkedLists[hashedKey].deleteAt(index);
           this.size--;
           return true;
         }
         currentNode = currentNode.nextNode;
       }
+      if (this.linkedLists[hashedKey].length === 0) {
+        this.linkedLists[hashedKey] = null;
+      }
     }
     return false;
+  }
+  length() {
+    // cannot depend on this.size, because thats for load factors.
+    let mapSize = 0;
+    // this loop will go through every bucket, and in every bucket it'll go through every node.
+    for (let i = 0; i < this.linkedLists.length; i++) {
+      if (this.linkedLists[i] === null) {
+        // empty bucket
+        continue;
+      }
+      let currentNode = this.linkedLists[i].head;
+      // go through every node
+      while (currentNode !== null) {
+        mapSize++;
+        currentNode = currentNode.nextNode;
+      }
+    }
+    return mapSize;
+  }
+  clear() {
+    this.capacity = 16;
+    this.size = 0;
+    this.linkedLists = Array(this.capacity).fill(null);
+    return true;
+  }
+  keys() {
+    let keysArray = [];
+    // go through every bucket
+    for (let i = 0; i < this.linkedLists.length; i++) {
+      if (this.linkedLists[i] === null) {
+        continue;
+      }
+      // this time instead of getting the length of the hashmap, we get the keys.
+      let currentNode = this.linkedLists[i].head;
+      while (currentNode !== null) {
+        keysArray.push(currentNode.value[0]);
+        currentNode = currentNode.nextNode;
+      }
+    }
+    return keysArray;
+  }
+  values() {
+    let valuesArray = [];
+    // code is same as keys() but its .value[1]
+    for (let i = 0; i < this.linkedLists.length; i++) {
+      if (this.linkedLists[i] === null) {
+        continue;
+      }
+      let currentNode = this.linkedLists[i].head;
+      while (currentNode !== null) {
+        valuesArray.push(currentNode.value[1]);
+        currentNode = currentNode.nextNode;
+      }
+    }
+    return valuesArray;
+  }
+  entries() {
+    let entriesArray = [];
+    // code is the same as keys() and values() but its both value[1] and value[0]
+    for (let i = 0; i < this.linkedLists.length; i++) {
+      if (this.linkedLists[i] === null) {
+        continue;
+      }
+      let currentNode = this.linkedLists[i].head;
+      while (currentNode !== null) {
+        entriesArray.push([currentNode.value[0], currentNode.value[1]]);
+        currentNode = currentNode.nextNode;
+      }
+    }
+    return entriesArray;
   }
 }
 
@@ -303,3 +381,19 @@ console.log("Different methods testing");
 console.log(test.get("ice cream"));
 console.log(test.has("drum"));
 console.log(test.has("mat"));
+console.log("Linked list length (pre removal)");
+console.log(test.length());
+console.log(test.remove("goat"));
+console.log("Removed goat, check if it's removed here (True or false):");
+console.log(test.has("goat"));
+console.log("Linked list length (post removal)");
+console.log(test.length());
+console.log("All keys");
+console.log(test.keys());
+console.log("All values");
+console.log(test.values());
+console.log("All key value pairs");
+console.log(test.entries());
+console.log("Clearing hashmap...");
+console.log(test.clear());
+console.log(test.linkedLists);
