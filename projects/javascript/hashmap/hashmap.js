@@ -98,6 +98,21 @@ class LinkedList {
     }
     return null;
   }
+  deleteAt(position) {
+    let currentNode = this.head;
+    if (position === 1) {
+      this.head = this.head.nextNode;
+      return this.head;
+    }
+    let prev = null;
+    for (let i = 0; i < position; i++) {
+      prev = currentNode;
+      currentNode = currentNode.nextNode;
+    }
+    prev.nextNode = currentNode.nextNode;
+
+    return this.head;
+  }
   toString() {
     let currentNode = this.head;
     let string = "";
@@ -118,6 +133,7 @@ class HashMap {
     this.loadFactor = loadFactor ?? 0.75;
     // initialize empty buckets
     this.linkedLists = Array(this.capacity).fill(null);
+    this.size = 0;
   }
 
   hash(key) {
@@ -149,6 +165,37 @@ class HashMap {
       // if a bucket is empty, create a new linked list there.
       this.linkedLists[hashedKey] = new LinkedList();
       this.linkedLists[hashedKey].append([key, value]);
+      this.size++;
+      let currentLoad = this.size / this.capacity;
+      if (currentLoad >= this.loadFactor) {
+        // if the load is exceeded, double the capacity and rehash every element.
+        this.capacity *= 2;
+        this.size = 0;
+        // rehashing the element works by going through every linked list in the array
+        // then going through every node in the linked list
+        let linkedListCopy = this.linkedLists;
+        this.linkedLists = Array(this.capacity).fill(null);
+        for (let i = 0; i < linkedListCopy.length; i++) {
+          if (linkedListCopy[i] === null) {
+            continue;
+          }
+          let currentNode = linkedListCopy[i].head;
+          while (currentNode !== null) {
+            // for each node in the non empty array slot (linked list), rehash the key
+            let hashedKey = this.hash(currentNode.value[0]);
+            if (this.linkedLists[hashedKey] === null) {
+              this.linkedLists[hashedKey] = new LinkedList();
+            }
+
+            this.linkedLists[hashedKey].append([
+              currentNode.value[0],
+              currentNode.value[1],
+            ]);
+
+            currentNode = currentNode.nextNode;
+          }
+        }
+      }
       return this.linkedLists[hashedKey];
     }
   }
@@ -193,24 +240,160 @@ class HashMap {
     }
   }
   remove(key) {
+    // first hash the key to find the bucket
     let hashedKey = this.hash(key);
     if (hashedKey < 0 || hashedKey >= this.linkedLists.length) {
       throw new Error("Accessing linkedLists out of bounds");
     }
     if (this.linkedLists[hashedKey] === null) {
+      // couldnt find key
       return false;
     } else {
-      // TODO: keep track of previousNode to try and re-link the list properly after removing the key
+      // go through the linked list and if the key is found using find(), use deleteAt()
       let currentNode = this.linkedLists[hashedKey].head;
       while (currentNode !== null) {
+        if (currentNode.value[0] === key) {
+          let index = this.linkedLists[hashedKey].find(currentNode.value);
+          this.linkedLists[hashedKey].deleteAt(index);
+          this.size--;
+          return true;
+        }
         currentNode = currentNode.nextNode;
+      }
+      if (this.linkedLists[hashedKey].length === 0) {
+        this.linkedLists[hashedKey] = null;
       }
     }
     return false;
   }
+  length() {
+    // cannot depend on this.size, because thats for load factors.
+    let mapSize = 0;
+    // this loop will go through every bucket, and in every bucket it'll go through every node.
+    for (let i = 0; i < this.linkedLists.length; i++) {
+      if (this.linkedLists[i] === null) {
+        // empty bucket
+        continue;
+      }
+      let currentNode = this.linkedLists[i].head;
+      // go through every node
+      while (currentNode !== null) {
+        mapSize++;
+        currentNode = currentNode.nextNode;
+      }
+    }
+    return mapSize;
+  }
+  clear() {
+    this.capacity = 16;
+    this.size = 0;
+    this.linkedLists = Array(this.capacity).fill(null);
+    return true;
+  }
+  keys() {
+    let keysArray = [];
+    // go through every bucket
+    for (let i = 0; i < this.linkedLists.length; i++) {
+      if (this.linkedLists[i] === null) {
+        continue;
+      }
+      // this time instead of getting the length of the hashmap, we get the keys.
+      let currentNode = this.linkedLists[i].head;
+      while (currentNode !== null) {
+        keysArray.push(currentNode.value[0]);
+        currentNode = currentNode.nextNode;
+      }
+    }
+    return keysArray;
+  }
+  values() {
+    let valuesArray = [];
+    // code is same as keys() but its .value[1]
+    for (let i = 0; i < this.linkedLists.length; i++) {
+      if (this.linkedLists[i] === null) {
+        continue;
+      }
+      let currentNode = this.linkedLists[i].head;
+      while (currentNode !== null) {
+        valuesArray.push(currentNode.value[1]);
+        currentNode = currentNode.nextNode;
+      }
+    }
+    return valuesArray;
+  }
+  entries() {
+    let entriesArray = [];
+    // code is the same as keys() and values() but its both value[1] and value[0]
+    for (let i = 0; i < this.linkedLists.length; i++) {
+      if (this.linkedLists[i] === null) {
+        continue;
+      }
+      let currentNode = this.linkedLists[i].head;
+      while (currentNode !== null) {
+        entriesArray.push([currentNode.value[0], currentNode.value[1]]);
+        currentNode = currentNode.nextNode;
+      }
+    }
+    return entriesArray;
+  }
 }
 
-let hash = new HashMap();
-console.log(hash.linkedLists);
-hash.set("Car", "Toyota Camry");
-console.log(hash.linkedLists);
+let test = new HashMap();
+console.log("Load factor testing");
+// load factor testing
+test.set("apple", "red");
+test.set("banana", "yellow");
+test.set("carrot", "orange");
+test.set("dog", "brown");
+test.set("elephant", "gray");
+test.set("frog", "green");
+test.set("grape", "purple");
+test.set("hat", "black");
+test.set("ice cream", "white");
+test.set("jacket", "blue");
+test.set("kite", "pink");
+test.set("lion", "golden");
+test.set("moon", "silver");
+test.set("notebook", "white");
+test.set("octopus", "pink");
+test.set("penguin", "black");
+test.set("quill", "brown");
+test.set("rose", "red");
+test.set("sun", "yellow");
+test.set("tiger", "orange");
+test.set("umbrella", "blue");
+test.set("violin", "brown");
+test.set("whale", "blue");
+test.set("xylophone", "gold");
+test.set("yak", "white");
+test.set("zebra", "black");
+test.set("ant", "brown");
+test.set("ball", "red");
+test.set("cat", "gray");
+test.set("drum", "brown");
+test.set("earring", "silver");
+test.set("fan", "black");
+test.set("goat", "white");
+
+console.log(test.linkedLists);
+console.log("--------------------------");
+console.log("Different methods testing");
+console.log(test.get("ice cream"));
+console.log(test.has("drum"));
+console.log(test.has("mat"));
+console.log("Linked list length (pre removal)");
+console.log(test.length());
+console.log(test.remove("goat"));
+console.log("Removed goat, check if it's removed here (True or false):");
+console.log(test.has("goat"));
+console.log("Linked list length (post removal)");
+console.log(test.length());
+console.log("All keys");
+console.log(test.keys());
+console.log("All values");
+console.log(test.values());
+console.log("All key value pairs");
+console.log(test.entries());
+console.log("Clearing hashmap...");
+console.log(test.clear());
+console.log(test.linkedLists);

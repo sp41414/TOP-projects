@@ -98,6 +98,21 @@ class LinkedList {
     }
     return null;
   }
+  deleteAt(position) {
+    let currentNode = this.head;
+    if (position === 1) {
+      this.head = this.head.nextNode;
+      return this.head;
+    }
+    let prev = null;
+    for (let i = 0; i < position; i++) {
+      prev = currentNode;
+      currentNode = currentNode.nextNode;
+    }
+    prev.nextNode = currentNode.nextNode;
+
+    return this.head;
+  }
   toString() {
     let currentNode = this.head;
     let string = "";
@@ -124,6 +139,10 @@ console.log(list.toString());
 console.log(list.getHead());
 console.log(list.getTail());
 console.log(list.at(2));
+let index = list.find("parrot");
+console.log(index);
+list.deleteAt(index);
+console.log(list.toString());
 
 // Output:
 /*
