@@ -133,6 +133,7 @@ class HashMap {
     this.loadFactor = loadFactor ?? 0.75;
     // initialize empty buckets
     this.linkedLists = Array(this.capacity).fill(null);
+    this.size = 0;
   }
 
   hash(key) {
@@ -164,6 +165,37 @@ class HashMap {
       // if a bucket is empty, create a new linked list there.
       this.linkedLists[hashedKey] = new LinkedList();
       this.linkedLists[hashedKey].append([key, value]);
+      this.size++;
+      let currentLoad = this.size / this.capacity;
+      if (currentLoad >= this.loadFactor) {
+        // if the load is exceeded, double the capacity and rehash every element.
+        this.capacity *= 2;
+        this.size = 0;
+        // rehashing the element works by going through every linked list in the array
+        // then going through every node in the linked list
+        let linkedListCopy = this.linkedLists;
+        this.linkedLists = Array(this.capacity).fill(null);
+        for (let i = 0; i < linkedListCopy.length; i++) {
+          if (linkedListCopy[i] === null) {
+            continue;
+          }
+          let currentNode = linkedListCopy[i].head;
+          while (currentNode !== null) {
+            // for each node in the non empty array slot (linked list), rehash the key
+            let hashedKey = this.hash(currentNode.value[0]);
+            if (this.linkedLists[hashedKey] === null) {
+              this.linkedLists[hashedKey] = new LinkedList();
+            }
+
+            this.linkedLists[hashedKey].append([
+              currentNode.value[0],
+              currentNode.value[1],
+            ]);
+
+            currentNode = currentNode.nextNode;
+          }
+        }
+      }
       return this.linkedLists[hashedKey];
     }
   }
@@ -215,9 +247,12 @@ class HashMap {
     if (this.linkedLists[hashedKey] === null) {
       return false;
     } else {
-      // TODO: keep track of previousNode to try and re-link the list properly after removing the key
       let currentNode = this.linkedLists[hashedKey].head;
       while (currentNode !== null) {
+        if (currentNode[0].value === key) {
+          this.size--;
+          return true;
+        }
         currentNode = currentNode.nextNode;
       }
     }
@@ -225,7 +260,46 @@ class HashMap {
   }
 }
 
-let hash = new HashMap();
-console.log(hash.linkedLists);
-hash.set("Car", "Toyota Camry");
-console.log(hash.linkedLists);
+let test = new HashMap();
+console.log("Load factor testing");
+// load factor testing
+test.set("apple", "red");
+test.set("banana", "yellow");
+test.set("carrot", "orange");
+test.set("dog", "brown");
+test.set("elephant", "gray");
+test.set("frog", "green");
+test.set("grape", "purple");
+test.set("hat", "black");
+test.set("ice cream", "white");
+test.set("jacket", "blue");
+test.set("kite", "pink");
+test.set("lion", "golden");
+test.set("moon", "silver");
+test.set("notebook", "white");
+test.set("octopus", "pink");
+test.set("penguin", "black");
+test.set("quill", "brown");
+test.set("rose", "red");
+test.set("sun", "yellow");
+test.set("tiger", "orange");
+test.set("umbrella", "blue");
+test.set("violin", "brown");
+test.set("whale", "blue");
+test.set("xylophone", "gold");
+test.set("yak", "white");
+test.set("zebra", "black");
+test.set("ant", "brown");
+test.set("ball", "red");
+test.set("cat", "gray");
+test.set("drum", "brown");
+test.set("earring", "silver");
+test.set("fan", "black");
+test.set("goat", "white");
+
+console.log(test.linkedLists);
+console.log("--------------------------");
+console.log("Different methods testing");
+console.log(test.get("ice cream"));
+console.log(test.has("drum"));
+console.log(test.has("mat"));
