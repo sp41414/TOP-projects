@@ -47,7 +47,42 @@ class Tree {
   buildTree(array) {
     return this.buildTreeRec(array, 0, array.length - 1);
   }
-  prettyPrint(node, prefix = "", isLeft = true) {
+  insert(root, key) {
+    if (root === null) return new Node(key);
+    if (root.data === key) return root; // dont insert duplicates
+    root.data > key
+      ? (root.left = this.insert(root.left, key))
+      : (root.right = this.insert(root.right, key));
+
+    return root;
+  }
+  delete(root, key) {
+    if (root === null) return root;
+    if (key > root.data) {
+      root.right = this.delete(root.right, key);
+    } else if (key < root.data) {
+      root.left = this.delete(root.left, key);
+    } else {
+      if (root.left === null) {
+        return root.right;
+      } else if (root.right === null) {
+        return root.left;
+      }
+
+      const successor = (root) => {
+        root = root.right;
+        while (root !== null && root.left !== null) {
+          root = root.left;
+        }
+        return root;
+      };
+
+      root.data = successor.data;
+      root.right = this.delete(root.right, root.data);
+    }
+    return root;
+  }
+  prettyPrint(node = this.root, prefix = "", isLeft = true) {
     if (node === null) {
       return;
     }
@@ -65,4 +100,12 @@ class Tree {
   }
 }
 let tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-tree.prettyPrint(tree.root);
+console.log("Original tree:");
+tree.prettyPrint();
+console.log("Inserted 69 tree:");
+tree.insert(tree.root, 69);
+tree.insert(tree.root, 69); // duplicate, doesnt get added.
+tree.prettyPrint();
+console.log("Removed 69 tree:");
+tree.delete(tree.root, 69);
+tree.prettyPrint();
