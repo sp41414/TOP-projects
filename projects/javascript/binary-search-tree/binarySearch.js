@@ -155,6 +155,19 @@ class Tree {
       return this.height(value, node.right);
     }
   }
+  depth(value, node = this.root, currentDepth = 0) {
+    if (node === null) {
+      return 0;
+    }
+    if (node.data === value) {
+      return currentDepth;
+    }
+    if (value < node.data) {
+      return this.depth(value, node.left, currentDepth + 1);
+    } else {
+      return this.depth(value, node.right, currentDepth + 1);
+    }
+  }
   prettyPrint(node = this.root, prefix = "", isLeft = true) {
     if (node === null) {
       return;
