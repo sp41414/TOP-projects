@@ -82,6 +82,15 @@ class Tree {
     }
     return root;
   }
+  find(key, node = this.root) {
+    if (node === null) return;
+    if (node.data === key) return [node.data, node.left, node.right];
+
+    let resultRight = this.find(key, node.right);
+    if (resultRight) return resultRight;
+    let resultLeft = this.find(key, node.left);
+    if (resultLeft) return resultLeft;
+  }
   prettyPrint(node = this.root, prefix = "", isLeft = true) {
     if (node === null) {
       return;
@@ -109,3 +118,7 @@ tree.prettyPrint();
 console.log("Removed 69 tree:");
 tree.delete(tree.root, 69);
 tree.prettyPrint();
+console.log("Find 324:");
+console.log(tree.find(324));
+console.log("Find 5943058: ");
+console.log(tree.find(5943058));
