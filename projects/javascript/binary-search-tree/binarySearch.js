@@ -7,6 +7,7 @@ class Node {
 }
 
 class Tree {
+  // this will first sort the array using merge sort while also removing duplicates
   constructor(array) {
     this.array = this.sortArray(array);
     this.root = this.buildTree(this.array);
@@ -36,6 +37,8 @@ class Tree {
     merged = merged.concat(recursedFirst, recursedSecond);
     return merged;
   }
+  // then it'll set the root node as the middle of the array, and each child node (left and right) is recursively
+  // set
   buildTreeRec(array, start, end) {
     if (start > end) return null;
     let middle = start + Math.floor((end - start) / 2);
@@ -47,6 +50,9 @@ class Tree {
   buildTree(array) {
     return this.buildTreeRec(array, 0, array.length - 1);
   }
+  // this will create a new node and traverse the tree until it finds a spot using a comparison
+  // if there is no root, the root will become the new node
+  // this will not insert if there already exists a same value node
   insert(root, key) {
     if (root === null) return new Node(key);
     if (root.data === key) return root; // dont insert duplicates
@@ -56,6 +62,8 @@ class Tree {
 
     return root;
   }
+  // this function will traverse the left and right from the root until it finds the node with the same data as key
+  // then it'll delete it by 1. checking its children, then 2. changing the pointers for nodes so its deleted.
   delete(root, key) {
     if (root === null) return root;
     if (key > root.data) {
@@ -82,6 +90,7 @@ class Tree {
     }
     return root;
   }
+  // this'll go on BOTH left and right of the tree until it finds the node, which it'll return its value, and its left node and right node.
   find(key, node = this.root) {
     if (node === null) return;
     if (node.data === key) return [node.data, node.left, node.right];
@@ -91,6 +100,7 @@ class Tree {
     let resultLeft = this.find(key, node.left);
     if (resultLeft) return resultLeft;
   }
+  // uses a queue system to go through every node and use the callback function on the node
   levelOrderForEach(callback) {
     if (typeof callback !== "function")
       throw new Error("A callback function is required");
@@ -112,6 +122,7 @@ class Tree {
       }
     }
   }
+  // each of these 3 functions use the callback in a different point depending on the order.
   inOrderForEach(callback, node = this.root) {
     if (typeof callback !== "function")
       throw new Error("A callback function is required");
@@ -136,6 +147,7 @@ class Tree {
     this.postOrderForEach(callback, node.right);
     callback(node);
   }
+  // height is from the value node to the deepest node
   height(value, node = this.root) {
     if (node === null) {
       return 0;
@@ -155,6 +167,7 @@ class Tree {
       return this.height(value, node.right);
     }
   }
+  // depth is from the root to the value node
   depth(value, node = this.root, currentDepth = 0) {
     if (node === null) {
       return 0;
@@ -168,9 +181,26 @@ class Tree {
       return this.depth(value, node.right, currentDepth + 1);
     }
   }
+  isBalanced(node = this.root) {
+    if (node === null) {
+      return true;
+    }
+    let lHeight = (function height(node) {
+      if (node === null) return 0;
+      return 1 + Math.max(height(node.left), height(node.right));
+    })(node.left);
+    let rHeight = (function height(node) {
+      if (node === null) return 0;
+      return 1 + Math.max(height(node.left), height(node.right));
+    })(node.right);
+
+    if (lHeight > rHeight + 1 || rHeight > lHeight + 1) return false;
+
+    return this.isBalanced(node.left) && this.isBalanced(node.right);
+  }
   prettyPrint(node = this.root, prefix = "", isLeft = true) {
     if (node === null) {
-      return;
+      return true;
     }
     if (node.right !== null) {
       this.prettyPrint(
@@ -185,17 +215,23 @@ class Tree {
     }
   }
 }
-let tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-console.log("Original tree:");
-tree.prettyPrint();
-console.log("Inserted 69 tree:");
-tree.insert(tree.root, 69);
-tree.insert(tree.root, 69); // duplicate, doesnt get added.
-tree.prettyPrint();
-console.log("Removed 69 tree:");
-tree.delete(tree.root, 69);
-tree.prettyPrint();
-console.log("Find 324:");
-console.log(tree.find(324));
-console.log("Find 5943058: ");
-console.log(tree.find(5943058));
+
+let tree = new Tree([...Array(100).keys()]);
+console.log("Is balanced: ", tree.isBalanced());
+console.log("Elements (pre) ");
+tree.preOrderForEach((element) => {
+  console.log(element.data);
+});
+console.log("Elements (post) ");
+tree.postOrderForEach((element) => {
+  console.log(element.data);
+});
+console.log("Elements (in) ");
+tree.inOrderForEach((element) => {
+  console.log(element.data);
+});
+
+tree.insert(tree.root, 324);
+tree.insert(tree.root, 114);
+tree.insert(tree.root, 5831);
+console.log("Is balanced (with numbers > 100): ", tree.isBalanced());
