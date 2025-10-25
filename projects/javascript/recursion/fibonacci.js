@@ -5,7 +5,7 @@ function fibs(number) {
     return [0];
   } else {
     let array = [0, 1];
-    for (i = 1; i < number; i++) {
+    for (let i = 1; i < number; i++) {
       array.push(array[array.length - 1] + array[array.length - 2]);
     }
     return array;
@@ -22,4 +22,3 @@ function fibsRec(number) {
 
 console.log(fibs(8));
 console.log(fibsRec(8));
-
