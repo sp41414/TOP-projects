@@ -198,6 +198,14 @@ class Tree {
 
     return this.isBalanced(node.left) && this.isBalanced(node.right);
   }
+  rebalance() {
+    let newArray = [];
+    this.postOrderForEach((element) => {
+      newArray.push(element.data);
+    });
+    this.array = this.sortArray(newArray);
+    this.root = this.buildTree(this.array);
+  }
   prettyPrint(node = this.root, prefix = "", isLeft = true) {
     if (node === null) {
       return true;
@@ -235,3 +243,8 @@ tree.insert(tree.root, 324);
 tree.insert(tree.root, 114);
 tree.insert(tree.root, 5831);
 console.log("Is balanced (with numbers > 100): ", tree.isBalanced());
+console.log("Balancing... ");
+tree.rebalance();
+console.log("Is balanced (same numbers): ", tree.isBalanced());
+console.log("Final tree:");
+tree.prettyPrint();
