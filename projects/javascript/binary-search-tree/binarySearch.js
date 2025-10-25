@@ -91,6 +91,70 @@ class Tree {
     let resultLeft = this.find(key, node.left);
     if (resultLeft) return resultLeft;
   }
+  levelOrderForEach(callback) {
+    if (typeof callback !== "function")
+      throw new Error("A callback function is required");
+    if (this.root === null) return;
+    let queue = [];
+
+    queue.push(this.root);
+
+    while (queue.length > 0) {
+      for (let i = 0; i < queue.length; i++) {
+        let node = queue.shift();
+        callback(node);
+        if (node.left !== null) {
+          queue.push(node.left);
+        }
+        if (node.right !== null) {
+          queue.push(node.right);
+        }
+      }
+    }
+  }
+  inOrderForEach(callback, node = this.root) {
+    if (typeof callback !== "function")
+      throw new Error("A callback function is required");
+    if (node === null) return;
+    this.inOrderForEach(callback, node.left);
+    callback(node);
+    this.inOrderForEach(callback, node.right);
+  }
+  preOrderForEach(callback, node = this.root) {
+    if (typeof callback !== "function")
+      throw new Error("A callback function is required");
+    if (node === null) return;
+    callback(node);
+    this.preOrderForEach(callback, node.left);
+    this.preOrderForEach(callback, node.right);
+  }
+  postOrderForEach(callback, node = this.root) {
+    if (typeof callback !== "function")
+      throw new Error("A callback function is required");
+    if (node === null) return;
+    this.postOrderForEach(callback, node.left);
+    this.postOrderForEach(callback, node.right);
+    callback(node);
+  }
+  height(value, node = this.root) {
+    if (node === null) {
+      return 0;
+    }
+    if (node.data === value) {
+      return (function getHeight(node) {
+        if (node === null) return 0;
+        let lHeight = getHeight(node.left);
+        let rHeight = getHeight(node.right);
+
+        return 1 + Math.max(lHeight, rHeight);
+      })(node);
+    }
+    if (value < node.data) {
+      return this.height(value, node.left);
+    } else {
+      return this.height(value, node.right);
+    }
+  }
   prettyPrint(node = this.root, prefix = "", isLeft = true) {
     if (node === null) {
       return;
