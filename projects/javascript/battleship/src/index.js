@@ -60,15 +60,18 @@ function placeShip(gameBoard) {
   const shipLengths = [5, 4, 3, 3, 3, 2];
 
   shipLengths.forEach((length) => {
-    try {
-      // calculates random position (cursed battleships where every ship is
-      // vertical)
-      const x = Math.floor(Math.random() * (gameBoard.size - length));
-      const y = Math.floor(Math.random() * (gameBoard.size - length));
-      gameBoard.placeShip(length, [x, y]);
-    } catch (e) {
-      console.log("Failed placement, trying again: ", e);
-      placeShip(gameBoard);
+    let placed = false;
+    while (!placed) {
+      try {
+        // calculates random position (cursed battleships where every ship is
+        // vertical)
+        const x = Math.floor(Math.random() * (gameBoard.size - length));
+        const y = Math.floor(Math.random() * gameBoard.size);
+        gameBoard.placeShip(length, [x, y]);
+        placed = true;
+      } catch (e) {
+        console.log("Failed to place, trying again: ", e);
+      }
     }
   });
 }
