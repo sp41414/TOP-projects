@@ -5,6 +5,7 @@ let computerPlayer = new Player("computer");
 let player = new Player();
 
 let gameState = {
+  gameStarted: false,
   playerTurn: true,
   gameOver: false,
 };
@@ -16,7 +17,7 @@ const computerGameGrid = document.querySelector(".computer-board-container");
 const statusDiv = document.createElement("div");
 
 statusDiv.id = "status";
-statusDiv.textContent = "Click on computer's board to attack!";
+statusDiv.textContent = "Click on Start Game to randomly generate your ships!";
 document.body.insertBefore(statusDiv, gameContainer); // so that the status text is above the two grids
 
 const gridComputerCells = document.createElement("div");
@@ -66,7 +67,8 @@ function placeShip(gameBoard) {
       const y = Math.floor(Math.random() * (gameBoard.size - length));
       gameBoard.placeShip(length, [x, y]);
     } catch (e) {
-      console.log("Failed placement ", e);
+      console.log("Failed placement, trying again: ", e);
+      placeShip(gameBoard);
     }
   });
 }
@@ -78,6 +80,8 @@ placeShipButton.textContent = "Start Game";
 placeShipButton.addEventListener("click", () => {
   placeShip(player.gameBoard);
   placeShip(computerPlayer.gameBoard);
+  gameState.gameStarted = true;
+  statusDiv.textContent = "Click on computer's board to attack!";
 
   player.gameBoard.ships.forEach((ship) => {
     ship.positions.forEach(([x, y]) => {
@@ -94,3 +98,79 @@ playAgainButton.id = "again";
 playAgainButton.textContent = "Play Again";
 playAgainButton.onclick = () => location.reload();
 document.getElementById("buttons").appendChild(playAgainButton);
+
+// event listener to attack on computer
+gridComputerCells.addEventListener("click", (e) => {
+  // if the game is over, not player's turn, it's hit or missed already, return
+  if (gameState.gameOver) return;
+  if (!gameState.gameStarted) return;
+  if (!gameState.playerTurn) return;
+  if (!e.target.classList.contains("cell")) return;
+  if (e.target.classList.contains("hit") || e.target.classList.contains("miss"))
+    return;
+  // get x and y positions
+  const x = parseInt(e.target.dataset.x);
+  const y = parseInt(e.target.dataset.y);
+
+  const result = computerPlayer.gameBoard.receiveAttack([x, y]);
+  if (result === "hit" || result === "sunk") {
+    e.target.classList.add("hit");
+    // check for if sunk or hit
+    statusDiv.textContent = result === "sunk" ? "You sunk a ship!" : "Hit!";
+  } else if (result === "missed") {
+    e.target.classList.add("miss");
+    statusDiv.textContent = "Miss!";
+  }
+
+  if (result === "game over") {
+    endGame("win");
+    return;
+  }
+
+  gameState.playerTurn = false;
+  computerAttack();
+});
+
+// computer attack's logic (random)
+async function computerAttack() {
+  // get within bounds x and y positions
+  const x = Math.floor(Math.random() * player.size);
+  const y = Math.floor(Math.random() * player.size);
+
+  const cell = document.getElementById(`player-${x}-${y}`);
+  if (cell.classList.contains("hit") || cell.classList.contains("miss")) {
+    // recalculate and redo everything if the computer is trying to hit an
+    // alreadu hit or missed cell
+    // so the computer knows whether a move is legal or not
+    computerAttack();
+    return;
+  }
+
+  const result = player.gameBoard.receiveAttack([x, y]);
+
+  // wait one second so user status text appears and computer "thinking" effect
+  await new Promise((resolve) => setTimeout(resolve, 1300));
+
+  if (result === "hit" || result === "sunk") {
+    cell.classList.add("hit");
+    statusDiv.textContent =
+      result === "sunk" ? "Enemy sunk your ship!" : "Enemy hit your ship!";
+  } else if (result === "missed") {
+    cell.classList.add("miss");
+    statusDiv.textContent = "Enemy missed!";
+  }
+  if (result === "game over") {
+    endGame("lose");
+    return;
+  }
+  gameState.playerTurn = true;
+}
+
+function endGame(result) {
+  gameState.gameOver = true;
+  if (result === "win") {
+    statusDiv.textContent = "You won!";
+  } else {
+    statusDiv.textContent = "You lose!";
+  }
+}
