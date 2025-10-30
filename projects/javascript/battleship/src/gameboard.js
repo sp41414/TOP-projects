@@ -12,17 +12,29 @@ export default class Gameboard {
       throw new Error("Please enter a length and position for the ship");
 
     // this'll check if the ship is out-of-bounds
-    if (position[0] + length >= this.size)
+    if (position[0] + length > this.size)
       throw new Error(
         "Please enter x value position within the gameboard bounds"
       );
-    if (position[1] + length >= this.size)
+    if (position[1] >= this.size)
       throw new Error("Please enter y value position within gameboard bounds");
 
     // then it'll go through each x position and place the ship
     let finalPositions = [];
     for (let i = 0; i < length; i++) {
       finalPositions.push([position[0] + i, position[1]]);
+    }
+    // checks for overlaps
+    if (
+      this.ships.some((ship) =>
+        ship.positions.some((pos) =>
+          finalPositions.some(
+            (newPos) => pos[0] === newPos[0] && pos[1] === newPos[1]
+          )
+        )
+      )
+    ) {
+      throw new Error("Ship overlaps");
     }
     let ship = new Ship(length, finalPositions);
     this.ships.push(ship);
