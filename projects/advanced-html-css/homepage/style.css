@@ -49,7 +49,7 @@ header {
   height: 100%;
   width: 100%;
   background-color: oklch(37.9% 0.146 265.522);
-  animation: rotate-background-popup 1s;
+  animation: rotate-background-popup 1s; /* doesn't work? */
   transform: rotate(-10deg) translateY(-120px) scale(1.4);
   z-index: -1;
 }
@@ -129,13 +129,13 @@ section {
   justify-content: space-between;
 }
 
-.header svg {
-  min-height: 32px;
+svg {
+  height: 32px;
   transition: transform 0.3s 0.1s;
   fill: white;
 }
 
-.header svg:hover {
+svg:hover {
   transform: scale(1.4);
   cursor: pointer;
 }
@@ -151,4 +151,27 @@ footer {
   padding: 1em;
   background-color: oklch(20.8% 0.042 265.755);
   align-items: center;
+}
+
+@media (max-width: 600px) {
+  body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .about-me-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .rotated-background {
+    top: 0;
+    transform: skew(0deg);
+  }
+  footer {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    align-items: center;
+    justify-content: center;
+  }
 }
