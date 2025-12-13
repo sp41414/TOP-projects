@@ -1,20 +1,39 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <ul>
-      <li>
-        <a href="./01-basic-holy-grail/index.html">01-basic-holy-grail</a>
-      </li>
-      <li>
-        <a href="./02-responsive-holy-grail/index.html"
-          >02-responsive-holy-grail</a
-        >
-      </li>
-    </ul>
-  </body>
+    <title>Intermediate HTML & CSS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 p-8 font-sans">
+    <div class="max-w-screen-lg mx-auto">
+
+        <div class="mb-10 flex flex-col items-center justify-center gap-4">
+            <h1 class="text-3xl font-bold text-center">Intermediate HTML & CSS</h1>
+            <div class="flex gap-6 text-sm font-semibold">
+                <a href="../../index.html" class="text-blue-600 dark:text-blue-400 hover:underline">&larr; Back Home</a>
+                <a href="https://github.com/sp41414/TOP-projects/tree/gh-pages/projects/intermediate-html-css"
+                    class="text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white transition-colors">View
+                    Source on GitHub</a>
+            </div>
+        </div>
+
+        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 list-none p-0">
+            <li
+                class="group relative rounded-lg border-2 border-neutral-200 hover:border-neutral-300 dark:hover:border-neutral-700 transition-all duration-200 dark:border-neutral-800 hover:shadow-lg shadow-neutral-300 dark:shadow-neutral-900 bg-white dark:bg-neutral-900">
+                <a href="./01-basic-holy-grail/index.html"
+                    class="block p-4 font-semibold hover:text-blue-600 dark:hover:text-blue-400 transition-colors">01-basic-holy-grail</a>
+            </li>
+            <li
+                class="group relative rounded-lg border-2 border-neutral-200 hover:border-neutral-300 dark:hover:border-neutral-700 transition-all duration-200 dark:border-neutral-800 hover:shadow-lg shadow-neutral-300 dark:shadow-neutral-900 bg-white dark:bg-neutral-900">
+                <a href="./02-responsive-holy-grail/index.html"
+                    class="block p-4 font-semibold hover:text-blue-600 dark:hover:text-blue-400 transition-colors">02-responsive-holy-grail</a>
+            </li>
+        </ul>
+    </div>
+</body>
+
 </html>
